@@ -1,9 +1,8 @@
 package explore;
 
-import java.util.HashSet;
 import java.util.LinkedList;
 
-class Solution {
+class Solution279 {
     private class NumberStepDTO{
         int number;
         int step;
@@ -40,7 +39,7 @@ class Solution {
 
     public static void main(String[] args) {
 
-        int result = new Solution().numSquares(12);
+        int result = new Solution279().numSquares(12);
         System.out.println(result);
     }
 }
