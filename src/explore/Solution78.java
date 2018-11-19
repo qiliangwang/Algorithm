@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
-class Solution77 {
+class Solution78 {
 
     private List<List<Integer>> res;
 
