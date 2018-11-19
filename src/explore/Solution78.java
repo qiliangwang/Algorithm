@@ -13,7 +13,7 @@ class Solution78 {
             res.add((List<Integer>) combination.clone());
             return;
         }
-        for (int i = start; i <= n; i ++) {
+        for (int i = start; i <= n - (k-combination.size()) + 1; i ++) {
             combination.addLast(i);
             generateCombination(i+1, n, k, combination);
             combination.removeLast();
