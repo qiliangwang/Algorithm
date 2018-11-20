@@ -1,32 +1,30 @@
 package explore;
 
+import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
 class Solution79 {
 
-//    public boolean exist(char[][] board, String word) {
-//        return false;
-//    }
-
-    private int d[][] = {{-1,0},{0,1},{1,0},{0,-1}};
-    private int m,n;
+    private int direction[][] = {{-1,0},{0,1},{1,0},{0,-1}};
     private boolean[][] visited;
+    private int m, n;
 
-    public boolean exist(char[][] board, String word) {
-
-        if(board == null || word == null)
-            throw new IllegalArgumentException("board or word can not be null!");
-
-        m = board.length;
-        assert( m > 0 );
-        n = board[0].length;
-
-        visited = new boolean[m][n];
-        for( int i = 0 ; i < m ; i ++ )
-            for( int j = 0 ; j < n ; j ++ )
-                if( searchWord( board, word, 0 , i, j) )
+    private boolean wordSearch(char[][] board, String word, int index, int startX, int startY) {
+        if (index == word.length() - 1) {
+            return board[startX][startY] == word.charAt(index);
+        }
+        if( board[startX][startY] == word.charAt(index) ){
+            visited[startX][startY] = true;
+            for( int i = 0 ; i < 4 ; i ++ ){
+                int newX = startX + direction[i][0];
+                int newY = startY + direction[i][1];
+                if( inArea(newX, newY) && !visited[newX][newY] &&
+                        wordSearch( board , word , index + 1 , newX , newY ) )
                     return true;
-
+            }
+            visited[startX][startY] = false;
+        }
         return false;
     }
 
@@ -34,40 +32,30 @@ class Solution79 {
         return x >= 0 && x < m && y >= 0 && y < n;
     }
 
-    // start from board[startx][starty], find word[index...word.size())
-    private boolean searchWord( char[][] board, String word, int index,
-                                int startx, int starty ){
+    public boolean exist(char[][] board, String word) {
 
-        //assert( inArea(startx,starty) );
-        if( index == word.length() - 1 )
-            return board[startx][starty] == word.charAt(index);
+        m = board.length;
+        n = board[0].length;
 
-        if( board[startx][starty] == word.charAt(index) ){
-            visited[startx][starty] = true;
-            for( int i = 0 ; i < 4 ; i ++ ){
-                int newx = startx + d[i][0];
-                int newy = starty + d[i][1];
-                if( inArea(newx, newy) && !visited[newx][newy] &&
-                        searchWord( board , word , index + 1 , newx , newy ) )
+        visited = new boolean[m][n];
+
+        for (int i = 0; i < m; i ++) {
+            for (int j = 0; j < n; j ++) {
+                if (wordSearch(board, word, 0, i, j)) {
                     return true;
+                }
             }
-            visited[startx][starty] = false;
         }
         return false;
     }
 
-
-    private static void printBoard(char[][] board) {
-        for (char[] line: board) {
-            System.out.println(line);
-        }
-    }
     public static void main(String[] args) {
-        char[][] board = {{'A','B','C','E'}, {'S','F','C','S'}, {'A','D','E','E'}};
+
+        char[][] b1 = {{'A','B','C','E'},{'S','F','C','S'},{'A','D','E','E'}};
 
         String words[] = {"ABCCED" , "SEE" , "ABCB" };
         for( int i = 0 ; i < words.length ; i ++ )
-            if( (new Solution79()).exist(board, words[i]))
+            if( (new Solution79()).exist(b1, words[i]))
                 System.out.println("found " + words[i]);
             else
                 System.out.println("can not found " + words[i]);
@@ -79,6 +67,5 @@ class Solution79 {
             System.out.println("found AB");
         else
             System.out.println("can not found AB");
-        printBoard(board);
     }
 }
