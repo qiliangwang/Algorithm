@@ -1,8 +1,5 @@
 package explore;
 
-
-import java.util.HashMap;
-
 class Solution11 {
 
     public int maxArea(int[] height) {
