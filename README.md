@@ -32,3 +32,17 @@ host     = localhost
 user     = debian-sys-maint
 password = 2a3AGpN7nW2FJtvJ
 ```
+
+sudo passwd
+enter current user password (kubernetes kubernetes for example )
+enter root password later (root root for example)
+
+```
+sudo apt update
+sudo apt install -y openssh-server
+sudo apt install -y docker.io
+
+ssh kubernetes@192.168.50.130
+ssh kubernetes@192.168.50.131
+ssh kubernetes@192.168.50.132
+```
