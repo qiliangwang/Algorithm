@@ -45,4 +45,37 @@ sudo apt install -y docker.io
 ssh kubernetes@192.168.50.130
 ssh kubernetes@192.168.50.131
 ssh kubernetes@192.168.50.132
+
+
+192.168.50.130 server01
+192.168.50.131 server02
+192.168.50.132 server03
+
+scp kubernetes-bins.tar.gz kubernetes@192.168.50.130:~
+scp kubernetes-bins.tar.gz kubernetes@192.168.50.131:~
+scp kubernetes-bins.tar.gz kubernetes@192.168.50.132:~
+
+tar -xvf kubernetes-bins.tar.gz
+
+mv kubernetes-bins/ bins
+
+```
+
+```
+
+vim config.properties 
+
+#kubernetes二进制文件目录,eg: /home/michael/bin
+BIN_PATH=/home/kubernetes/bin
+
+#当前节点ip, eg: 192.168.1.102
+NODE_IP=192.168.50.130
+
+#etcd服务集群列表, eg: http://192.168.1.102:2379
+#如果已有etcd集群可以填写现有的。没有的话填写：http://${MASTER_IP}:2379 （MASTER_IP自行替换成自己的主节点ip）
+ETCD_ENDPOINTS=192.168.50.130:2379
+
+#kubernetes主节点ip地址, eg: 192.168.1.102
+MASTER_IP=192.168.50.130
+
 ```
