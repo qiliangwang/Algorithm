@@ -3,7 +3,7 @@ package explore;
 import java.util.TreeMap;
 
 public class Trie {
-    private class Node{
+    private class Node {
         public boolean isWord;
         public TreeMap<Character, Node> next;
 
