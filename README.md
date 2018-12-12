@@ -86,3 +86,41 @@ $ ./gen-config.sh simple
 $ find target/ -type f
 
 ```
+
+```
+cp ./kubernetes-starter/target/master-node/etcd.service /lib/systemd/system/
+
+systemctl enable etcd.service
+
+mkdir -p /var/lib/etcd
+
+service etcd start
+
+journalctl -f -u etcd.service
+
+netstat -ntlp
+
+the same as below
+
+cp ./kubernetes-starter/target/master-node/kube-apiserver.service /lib/systemd/system/
+
+systemctl enable kube-apiserver.service
+
+service kube-apiserver start
+
+journalctl -f -u kube-apiserver.service
+
+
+export SPARK_HOME=/home/vaderwang/software/spark-2.1.0
+export PATH=$SPARK_HOME/bin:$PATH
+
+java -jar jenkins.war --httpPort=8080
+
+Jenkins initial setup is required. An admin user has been created and a password generated.
+Please use the following password to proceed to installation:
+
+18349fd85b51452a903027a896b7e19c
+
+This may also be found at: /root/.jenkins/secrets/initialAdminPassword
+
+```
