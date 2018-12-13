@@ -1,4 +1,4 @@
-package backtracking;
+package leetcode;
 
 class Solution79 {
 
