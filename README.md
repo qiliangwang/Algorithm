@@ -124,3 +124,31 @@ Please use the following password to proceed to installation:
 This may also be found at: /root/.jenkins/secrets/initialAdminPassword
 
 ```
+
+``` 
+#!/bin/bash
+HOST_NAME=gitlab.com
+GITLAB_DIR=/home/vaderwang/software/gitlab
+docker stop gitlab
+docker rm gitlabcd 
+docker run -d \
+    --hostname ${HOST_NAME} \
+    -p 9443:443 -p 9080:80 -p 2222:22 \
+    --name gitlab \
+    -v ${GITLAB_DIR}/config:/etc/gitlab \
+    -v ${GITLAB_DIR}/logs:/var/log/gitlab \
+    -v ${GITLAB_DIR}/data:/var/opt/gitlab \
+    registry.cn-hangzhou.aliyuncs.com/imooc/gitlab-ce:latest
+```
+
+vim 
+root@vaderwang-x399:/home/vaderwang/software/gitlab/config# vim gitlab.rb
+around 315 line change port 22 => 2222
+
+pwd
+jenkins root root
+gitlab root gitlab_gitlab
+
+gitlab vaderwang gitlab_gitlab
+
+cat ~/.ssh/id_rsa.pub
