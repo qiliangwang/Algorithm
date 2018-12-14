@@ -1,13 +1,10 @@
 package leetcode;
 
-import java.util.ArrayList;
-import java.util.List;
-
-class NumArray {
+class Solution303 {
 
     private int[] sum;
 
-    public NumArray(int[] nums) {
+    public Solution303(int[] nums) {
         sum = new int[nums.length + 1];
 
         for (int i = 1; i < sum.length; i ++) {
@@ -24,7 +21,7 @@ class NumArray {
 
     public static void main(String[] args) {
         int[] nums = {-2, 0, 3, -5, 2, -1};
-        NumArray numArray = new NumArray(nums);
+        Solution303 numArray = new Solution303(nums);
         int result = numArray.sumRange(0, 5);
         System.out.println(result);
     }
