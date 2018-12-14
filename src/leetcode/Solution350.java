@@ -20,6 +20,8 @@ class Solution350 {
                 numFreqHashMap.put(num, numFreqHashMap.get(num) - 1);
             }
         }
+
+        //convert result
         int[] arr = new int[res.size()];
         int idx = 0;
         for (int ele : res) {
