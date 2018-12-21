@@ -1,4 +1,4 @@
-package visualization.sort.quick;
+package visualization.quick;
 
 import java.awt.*;
 import java.awt.geom.Ellipse2D;

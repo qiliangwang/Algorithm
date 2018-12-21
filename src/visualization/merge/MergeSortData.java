@@ -1,4 +1,4 @@
-package visualization.sort.merge;
+package visualization.merge;
 
 import java.util.Arrays;
 import java.util.Random;

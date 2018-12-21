@@ -1,4 +1,4 @@
-package visualization.sort.quick;
+package visualization.quick;
 
 public class QuickSortData {
 

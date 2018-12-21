@@ -1,4 +1,4 @@
-package visualization.sort.merge;
+package visualization.merge;
 
 import javax.swing.*;
 import java.awt.*;
