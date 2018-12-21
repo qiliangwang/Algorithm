@@ -152,3 +152,36 @@ gitlab root gitlab_gitlab
 gitlab vaderwang gitlab_gitlab
 
 cat ~/.ssh/id_rsa.pub
+
+```
+git clone http://gitlab.com:9080/vaderwang/microservice.git
+```
+
+```
+sudo curl -L "https://github.com/docker/compose/releases/download/1.23.1/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
+```
+
+```
+sudo chmod +x /usr/local/bin/docker-compose
+```
+
+```
+$ docker-compose --version
+docker-compose version 1.23.1, build 1719ceb
+```
+
+```
+java -jar jenkins.war --httpPort=8080
+```
+
+```
+kill -s 9 1827
+```
+
+```
+lsof -i :80
+```
+
+安装完成后，打开Web UI，点击登录，默认账户`admin/Harbor12345`,登录成功后进入项目管理界面：
+
+dataGrip control + N
