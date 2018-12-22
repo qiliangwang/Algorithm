@@ -37,7 +37,6 @@ public class Solution145 {
                 current = node.right;
             }
 
-
         }
         return result;
     }
