@@ -32,7 +32,11 @@ public class Solution21 {
 
     public static void printLinkedList(ListNode node) {
         while (node != null) {
-            System.out.print(node.val + "->");
+            if (node.next != null) {
+                System.out.print(node.val + "->");
+            } else {
+                System.out.print(node.val);
+            }
             node = node.next;
         }
     }
