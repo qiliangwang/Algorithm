@@ -185,3 +185,4 @@ lsof -i :80
 安装完成后，打开Web UI，点击登录，默认账户`admin/Harbor12345`,登录成功后进入项目管理界面：
 
 dataGrip control + N
+harbor ./install.sh
