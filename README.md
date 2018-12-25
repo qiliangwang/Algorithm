@@ -186,3 +186,5 @@ lsof -i :80
 
 dataGrip control + N
 harbor ./install.sh
+
+vaderwang@vaderwang-x399:~/software/spark-2.3.0/bin$ pyspark 

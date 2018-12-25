@@ -1,12 +1,10 @@
 package leetcode;
 
-import sun.reflect.generics.tree.Tree;
-
 import java.util.LinkedList;
 import java.util.Queue;
 import java.util.Stack;
 
-public class Codec {
+class Codec {
 
     // Encodes a tree to a single string.
     public String serialize(TreeNode root) {
