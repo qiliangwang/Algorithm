@@ -36,8 +36,19 @@ public class Solution62 {
         return dp[m - 1][n - 1];
     }
 
+    public int uniquePaths2(int m, int n) {
+        int[] res = new int[n];
+        res[0] = 1;
+        for (int i = 0; i < m; i++) {
+            for (int j = 1; j < n; j++) {
+                res[j] = res[j] + res[j - 1];
+            }
+        }
+        return res[n - 1];
+    }
+
     public static void main(String[] args) {
-        int result = new Solution62().uniquePaths(7, 3);
+        int result = new Solution62().uniquePaths2(7, 3);
         System.out.println(result);
     }
 }
