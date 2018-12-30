@@ -14,14 +14,14 @@ public class Solution239 {
      * Output: [3,3,5,5,6,7]
      * Explanation:
      *
-     * Window position                Max
-     * ---------------               -----
-     * [1  3  -1] -3  5  3  6  7       3
-     *  1 [3  -1  -3] 5  3  6  7       3
-     *  1  3 [-1  -3  5] 3  6  7       5
-     *  1  3  -1 [-3  5  3] 6  7       5
-     *  1  3  -1  -3 [5  3  6] 7       6
-     *  1  3  -1  -3  5 [3  6  7]      7
+     * Window position                Max    Deque
+     * ---------------               -----  -------
+     * [1  3  -1] -3  5  3  6  7       3        0 -> 1 -> 1, 2
+     *  1 [3  -1  -3] 5  3  6  7       3        1, 2, 3
+     *  1  3 [-1  -3  5] 3  6  7       5        2, 3 -> 2 -> none, 4
+     *  1  3  -1 [-3  5  3] 6  7       5        4, 5
+     *  1  3  -1  -3 [5  3  6] 7       6        4, 5 -> none, 6
+     *  1  3  -1  -3  5 [3  6  7]      7        6 -> none , 7
      * Note:
      * You may assume k is always valid, 1 ≤ k ≤ input array's size for non-empty array.
      *
