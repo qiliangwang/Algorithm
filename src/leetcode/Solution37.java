@@ -42,13 +42,9 @@ public class Solution37 {
         for (int i = 0; i < 9; i ++) {
             if (board[row][i] != '.' && board[row][i] == c) return false;
             if (board[i][col] != '.' && board[i][col] == c) return false;
-//            int cubeX = 3 * (row / 3) + i / 3;
-//            int cubeY = 3 * (col / 3) + i / 3;
-//            if (board[cubeX][cubeY] != '.' && board[cubeX][cubeY] == c) return false;
-            if (board[3 * (row / 3) + i / 3][3 * (col / 3) + i / 3] != '.'
-                    && board[3 * (row / 3) + i / 3][3 * (col / 3) + i / 3] == c) {
-                return false;
-            }
+            int cubeX = 3 * (row / 3) + i / 3;
+            int cubeY = 3 * (col / 3) + i % 3;
+            if (board[cubeX][cubeY] != '.' && board[cubeX][cubeY] == c) return false;
         }
         return true;
     }
