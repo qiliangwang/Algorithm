@@ -1,9 +1,18 @@
 package leetcode;
 
+import java.util.HashMap;
+import java.util.HashSet;
+
 public class Solution36 {
 
 
     /**
+     * Determine if a 9x9 Sudoku board is valid. Only the filled cells need to be validated according to the following rules:
+     *
+     * Each row must contain the digits 1-9 without repetition.
+     * Each column must contain the digits 1-9 without repetition.
+     * Each of the 9 3x3 sub-boxes of the grid must contain the digits 1-9 without repetition.
+     *
      * [
      *   ["5","3",".",".","7",".",".",".","."],
      *   ["6",".",".","1","9","5",".",".","."],
@@ -16,13 +25,38 @@ public class Solution36 {
      *   [".",".",".",".","8",".",".","7","9"]
      * ]
      *
-     *  -> true
+     * true
      *
      * @param board
      * @return
      */
     public boolean isValidSudoku(char[][] board) {
-        return false;
+        for (int i = 0; i < board.length; i ++) {
+            HashSet<Character> row = new HashSet<>();
+            HashSet<Character> column = new HashSet<>();
+            HashSet<Character> cube = new HashSet<>();
+            for (int j = 0; j < board[0].length; j ++) {
+                // row valid ,row.add() is false means repeat
+                if (board[i][j] != '.' && !row.add(board[i][j]))return false;
+                // column valid
+                if (board[j][i] != '.' && !column.add(board[j][i])) return false;
+                //cube valid
+                if (board[calRowIndex(i, j)][calColIndex(i, j)] != '.' && !cube.add(board[calRowIndex(i, j)][calColIndex(i, j)])) return false;
+            }
+        }
+        return true;
+    }
+
+    private int calRowIndex(int i, int j) {
+        int startRow = 3 * (i / 3); // 0, 0, 0, 3, 3, 3, 6, 6, 6
+        int cubeRow = j / 3; // 0, 0, 0, 1, 1, 1, 2, 2, 2
+        return startRow + cubeRow;
+    }
+
+    private int calColIndex(int i, int j) {
+        int startCol = 3 * (i % 3); // 0, 3, 6, 0, 3, 6, 0, 3, 6
+        int cubeCol = j % 3; // 0, 1, 2, 0, 1, 2, 0, 1, 2
+        return startCol + cubeCol;
     }
 
 
@@ -39,6 +73,7 @@ public class Solution36 {
                 {'.', '.', '.', '4', '1', '9', '.', '.', '5'},
                 {'.', '.', '.', '.', '8', '.', '.', '7', '9'}};
         boolean result = new Solution36().isValidSudoku(board);
+
         System.out.println(result);
     }
 }
