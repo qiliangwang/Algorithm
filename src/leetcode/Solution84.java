@@ -16,9 +16,12 @@ public class Solution84 {
         int max = 0;
         Stack<Integer> stack = new Stack<>();
         stack.push(0);
-        for (int i = 1; i < heights.length; i ++) {
-            while (!stack.isEmpty() && heights[i] < heights[stack.peek()]) {
-                int area = (i - stack.peek()) * heights[stack.pop()];
+        for (int i = 1; i <= heights.length; i ++) {
+            int h = i == heights.length ? 0 : heights[i];
+            while (!stack.isEmpty() && h < heights[stack.peek()]) {
+                int height = heights[stack.pop()];
+                int start = stack.isEmpty() ? -1 : stack.peek();
+                int area = (i - start - 1) * height;
                 max = Math.max(max, area);
             }
             stack.push(i);
@@ -27,7 +30,11 @@ public class Solution84 {
     }
 
     public static void main(String[] args) {
-        int[] height = {2, 1, 5, 6, 2, 3, 0};
+//        int[] height = {2, 1, 5, 6, 2, 3, 0};
+//        int[] height = {1, 2, 3, 4, 5, 6, 7, 8};
+//        int[] height = {8, 7, 6, 5, 4, 3, 2, 1};
+        int[] height = {2, 3, 4, 5, 1, 2, 3, 4, 1, 2, 3, 4, 1, 2, 3, 4};
+
         int result = new Solution84().largestRectangleArea(height);
         System.out.println(result);
     }
