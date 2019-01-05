@@ -3,7 +3,6 @@ package leetcode;
 public class Solution83 {
 
     /**
-     * solve it with dp
      * Given a sorted linked list, delete all duplicates such that each element appear only once.
      *
      * Example 1:
