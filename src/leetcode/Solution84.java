@@ -21,6 +21,7 @@ public class Solution84 {
             while (!stack.isEmpty() && h < heights[stack.peek()]) {
                 int height = heights[stack.pop()];
                 int start = stack.isEmpty() ? -1 : stack.peek();
+                //(i - 1 - start) * height;
                 int area = (i - start - 1) * height;
                 max = Math.max(max, area);
             }
