@@ -6,7 +6,6 @@ public class Solution10 {
         return false;
     }
 
-
     public static void main(String[] args) {
         boolean result = new Solution10().isMatch("19087", "a");
         System.out.println(result);

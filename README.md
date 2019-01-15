@@ -265,7 +265,46 @@ export HBASE_MANAGES_ZK=false
 vaderwang@vaderwang-x399:~/software/hbase-1.2.4/conf$ vim hbase-site.xml 
 ```
 
+```xml
+<configuration>
+  <property>
+    <name>hbase.rootdir</name>
+    <value>hdfs://localhost:9000/hbase</value>
+  </property> 
+  <property>s
+    <name>hbase.zookeeper.property.dataDir</name>
+    <value>/home/vaderwang/hadoop_data/zookeeper</value>
+  </property> 
+  <property>
+    <name>hbase.cluster.distributed</name>
+    <value>true</value>
+  </property>
+  <property>
+    <name>hbase.zookeeper.quorum</name>
+    <value>localhost</value>
+  </property>
+  <property>
+    <name>hbase.zookeeper.property.clientPort</name>
+    <value>2181</value>
+  </property>
+  <property>
+    <name>hbase.hregion.menstore.flush.size</name>
+    <value>268435456</value>
+  </property>
+  <property>
+    <name>hbase.hregion.max.filesize</name>
+    <value>107374182400</value>
+  </property>
+  <property>
+    <name>hbase.hregion.majorcompaction</name>
+    <value>0</value>
+  </property>
+</configuration>
 ```
 
+```shell
+vaderwang@vaderwang-x399:~/software/hbase-1.2.4/bin$ ./start-hbase.sh 
+
+vaderwang@vaderwang-X399:~/software/hbase-1.2.4/bin$ ./hbase shell
 ```
 
