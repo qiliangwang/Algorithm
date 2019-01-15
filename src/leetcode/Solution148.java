@@ -1,5 +1,8 @@
 package leetcode;
 
+/**
+ * @author Vader Wang
+ */
 public class Solution148 {
 
     /**
@@ -10,9 +13,8 @@ public class Solution148 {
      *
      * Input: -1->5->3->4->0
      * Output: -1->0->3->4->5
-     * @param head
-     * @return
      */
+
     public ListNode sortList(ListNode head) {
         return head;
     }

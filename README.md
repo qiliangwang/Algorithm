@@ -188,3 +188,84 @@ dataGrip control + N
 harbor ./install.sh
 
 vaderwang@vaderwang-x399:~/software/spark-2.3.0/bin$ pyspark 
+
+```bash
+vaderwang@vaderwang-x399:~/software$ tar zxf zookeeper-3.4.9.tar.gz 
+
+vaderwang@vaderwang-x399:~/software$ cd zookeeper-3.4.9/conf/
+
+vaderwang@vaderwang-x399:~/software/zookeeper-3.4.9/conf$ cp zoo_sample.cfg zoo.cfg
+
+vaderwang@vaderwang-x399:~/software/zookeeper-3.4.9/conf$ vim zoo.cfg
+
+vaderwang@vaderwang-x399:~/software/zookeeper-3.4.9/conf$ mkdir /tmp/zookeeper
+
+vaderwang@vaderwang-x399:~/software/zookeeper-3.4.9/conf$ vim /tmp/zookeeper/myid
+
+vaderwang@vaderwang-x399:~/software/zookeeper-3.4.9/bin$ ./zkServer.sh 
+
+vaderwang@vaderwang-x399:~/software/zookeeper-3.4.9/bin$ ./zkServer.sh start
+
+```
+
+
+
+```shell
+vaderwang@vaderwang-x399:~/software/hadoop-2.7.3/etc/hadoop$ vim hdfs-site.xml 
+```
+
+
+
+```xml
+<configuration>
+  <property>
+    <name>dfs.replication</name>
+    <value>1</value>
+  </property>
+  <property>
+    <name>dfs.namenode.name.dir</name>
+    <value>file:/home/vaderwang/hadoop_data/dfs/name</value>
+  </property>
+  <property>
+    <name>dfs.datanode.data.dir</name>
+    <value>file:/home/vaderwang/hadoop_data/dfs/data</value>
+  </property>
+</configuration>
+```
+
+```shell
+rm -rf /home/vaderwang/hadoop_data/dfs/name
+rm -rf /home/vaderwang/hadoop_data/dfs/data
+```
+
+```shell
+vaderwang@vaderwang-x399:~/software/hadoop-2.7.3/bin$ ./hadoop namenode -format
+```
+
+```
+19/01/15 20:00:21 INFO namenode.FSImageFormatProtobuf: Saving image file /home/vaderwang/hadoop_data/dfs/name/current/fsimage.ckpt_0000000000000000000 using no compression
+19/01/15 20:00:21 INFO namenode.FSImageFormatProtobuf: Image file /home/vaderwang/hadoop_data/dfs/name/current/fsimage.ckpt_0000000000000000000 of size 356 bytes saved in 0 seconds.
+19/01/15 20:00:21 INFO namenode.NNStorageRetentionManager: Going to retain 1 images with txid >= 0
+19/01/15 20:00:21 INFO util.ExitUtil: Exiting with status 0
+19/01/15 20:00:21 INFO namenode.NameNode: SHUTDOWN_MSG: 
+/************************************************************
+SHUTDOWN_MSG: Shutting down NameNode at localhost/127.0.0.1
+************************************************************/
+```
+
+```shell
+vaderwang@vaderwang-x399:~/software/hadoop-2.7.3/sbin$ ./start-dfs.sh 
+```
+
+```shell
+vaderwang@vaderwang-x399:~/software/hbase-1.2.4/conf$ vim hbase-env.sh 
+
+export HBASE_MANAGES_ZK=false
+
+vaderwang@vaderwang-x399:~/software/hbase-1.2.4/conf$ vim hbase-site.xml 
+```
+
+```
+
+```
+
