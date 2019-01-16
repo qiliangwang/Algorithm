@@ -308,3 +308,21 @@ vaderwang@vaderwang-x399:~/software/hbase-1.2.4/bin$ ./start-hbase.sh
 vaderwang@vaderwang-X399:~/software/hbase-1.2.4/bin$ ./hbase shell
 ```
 
+## PHOENIX
+
+https://archive.apache.org/dist/phoenix/
+
+选择对应的版本下载
+
+https://archive.apache.org/dist/phoenix/apache-phoenix-4.13.1-HBase-1.2/bin/
+
+```shell
+vaderwang@vaderwang-x399:~/software$ tar zxf apache-phoenix-4.13.1-HBase-1.2-bin.tar.gz 
+
+
+vaderwang@vaderwang-x399:~/software/Phoenix-4.1.3$ cp phoenix-core-4.13.1-HBase-1.2.jar ../hbase-1.2.4/lib/
+
+vaderwang@vaderwang-x399:~/software/Phoenix-4.1.3$ cp phoenix-4.13.1-HBase-1.2-server.jar ../hbase-1.2.4/lib/
+
+```
+
