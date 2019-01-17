@@ -206,15 +206,14 @@ vaderwang@vaderwang-x399:~/software/zookeeper-3.4.9/bin$ ./zkServer.sh
 
 vaderwang@vaderwang-x399:~/software/zookeeper-3.4.9/bin$ ./zkServer.sh start
 
+vaderwang@vaderwang-x399:~/software/zookeeper-3.4.9/bin$ ./zkServer.sh status
 ```
 
-
+清空hbase，跳转到Hadoop目录
 
 ```shell
 vaderwang@vaderwang-x399:~/software/hadoop-2.7.3/etc/hadoop$ vim hdfs-site.xml 
 ```
-
-
 
 ```xml
 <configuration>
@@ -233,9 +232,13 @@ vaderwang@vaderwang-x399:~/software/hadoop-2.7.3/etc/hadoop$ vim hdfs-site.xml
 </configuration>
 ```
 
+把name和data目录下的清空
+
 ```shell
 rm -rf /home/vaderwang/hadoop_data/dfs/name
 rm -rf /home/vaderwang/hadoop_data/dfs/data
+rm -rf /home/vaderwang/hadoop_data/dfs/namesecondary
+rm -rf /home/vaderwang/hadoop_data/dfs/mapred
 ```
 
 ```shell
@@ -257,6 +260,16 @@ SHUTDOWN_MSG: Shutting down NameNode at localhost/127.0.0.1
 vaderwang@vaderwang-x399:~/software/hadoop-2.7.3/sbin$ ./start-dfs.sh 
 ```
 
+jps
+
+NameNode
+
+DataNode
+
+SecondaryNameNode
+
+配置HBase
+
 ```shell
 vaderwang@vaderwang-x399:~/software/hbase-1.2.4/conf$ vim hbase-env.sh 
 
@@ -271,7 +284,7 @@ vaderwang@vaderwang-x399:~/software/hbase-1.2.4/conf$ vim hbase-site.xml
     <name>hbase.rootdir</name>
     <value>hdfs://localhost:9000/hbase</value>
   </property> 
-  <property>s
+  <property>
     <name>hbase.zookeeper.property.dataDir</name>
     <value>/home/vaderwang/hadoop_data/zookeeper</value>
   </property> 
@@ -308,6 +321,7 @@ vaderwang@vaderwang-x399:~/software/hbase-1.2.4/bin$ ./start-hbase.sh
 vaderwang@vaderwang-X399:~/software/hbase-1.2.4/bin$ ./hbase shell
 ```
 
+jps
 ## PHOENIX
 
 https://archive.apache.org/dist/phoenix/
@@ -326,3 +340,7 @@ vaderwang@vaderwang-x399:~/software/Phoenix-4.1.3$ cp phoenix-4.13.1-HBase-1.2-s
 
 ```
 
+
+HMaster
+
+HRegionServer
