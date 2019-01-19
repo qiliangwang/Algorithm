@@ -8,7 +8,9 @@ import java.util.HashMap;
 class Solution138 {
 
     public RandomListNode copyRandomList(RandomListNode head) {
-        if (head == null) return null;
+        if (head == null) {
+            return null;
+        }
         HashMap<RandomListNode, RandomListNode> map = new HashMap<>();
         RandomListNode dummy = new RandomListNode(0);
         RandomListNode cur = dummy;
@@ -30,8 +32,12 @@ class Solution138 {
     }
 
     public RandomListNode copyRandomListII(RandomListNode head) {
-        if (head == null) return null;
-
+        if (head == null) {
+            return null;
+        }
+        //link copy to the original
+        //point next and random
+        //extract copy
         return null;
     }
 

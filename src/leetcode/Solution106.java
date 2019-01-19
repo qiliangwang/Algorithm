@@ -1,5 +1,8 @@
 package leetcode;
 
+/**
+ * @author Vader Wang
+ */
 public class Solution106 {
 
     /**
@@ -19,6 +22,12 @@ public class Solution106 {
      *   9  20
      *     /  \
      *    15   7
+     *            root, left, right
+     * preorder  [ 3,     9,  20, 15, 7]
+     *           left, root,    right
+     * inorder   [9,     3,  15, 20, 7]
+     *            left,   right,    root
+     * postorder [ 9,    15, 7, 20,   3]
      * @param inorder
      * @param postorder
      * @return
@@ -37,6 +46,7 @@ public class Solution106 {
             return null;
         }
         TreeNode root = new TreeNode(postorder[pPostorder--]);
+
         if (inorder[pInorder] != root.val) {
             root.right = helper(inorder, postorder, root);
         }
@@ -46,6 +56,7 @@ public class Solution106 {
         }
         return root;
     }
+
     public static void main(String[] args) {
         int[] postorder  = {9, 15, 7, 20, 3};
         int[] inorder = {9, 3, 15, 20, 7};
