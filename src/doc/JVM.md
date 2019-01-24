@@ -67,3 +67,27 @@ JVisualVm
 
 
 
+GCViewer
+
+https://github.com/chewiebug/GCViewer
+
+```shell
+$ git clone git@github.com:chewiebug/GCViewer.git
+
+$ cd GCViewer
+
+$ mvn clean package -Dmaven.test.skip
+
+$ java -jar gcviewer-1.36-SNAPSHOT.jar 
+```
+
+
+
+```shell
+$ javap -verbose xxxx.class > xxxx.txt
+```
+
+
+
+
+
