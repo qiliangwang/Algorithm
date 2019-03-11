@@ -485,6 +485,30 @@ object DatasetApp {
 
 ```
 
+### ip解析
+
+https://github.com/wzhe06/ipdatabase
+
+```shell
+git clone git@github.com:wzhe06/ipdatabase.git
+```
+
+安装.jar到本地maven仓库
+
+```shell
+ cd ipdatabase/
+
+mvn clean package -DskipTests
+
+mvn install:install-file -Dfile=/home/vaderwang/Github/ipdatabase/target/ipdatabase-1.0-SNAPSHOT.jar -DgroupId=com.ggstar -DartifactId=ipdatabase -Dversion=1.0 -Dpackaging=jar
+```
+
+或者简单一些
+
+```shell
+mvn clean install -DskipTests
+```
+
 
 
 ### Spark Streaming

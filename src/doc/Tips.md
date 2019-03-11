@@ -24,44 +24,42 @@ Ubuntu:		 Ctrl + Shift + I
 
 ### IDEA格式化代码
 
+enter class name
 control + N
 
+enter file name
 control + shift + N
 
-control + shift + H
+find in path
+ctrl + alt + f
 
-
+去除多余import:
+ctrl + alt + o
 
 快速抽取返回值：
-
 control + alt + v
 
 万能：
-
 alt+enter 
 
 点击showMenbers可以查看类中的方法等
 
 格式化代码：
-
 control + alt + shift + L
 
 快速下一行：
-
 win + shift + enter
 
 提取变量：
-
 control + alt + v
 
 变量名大写：
-
 control+ shift + u
 
 批量修改变量名：
-
 control + shift + alt + j
 
+control + shift + H
 为了能够使用javac需要把下面路径加入环境变量Path
 
 ```
