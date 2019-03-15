@@ -1,4 +1,4 @@
-package com.interview.javabasic.jvm.gc;
+package basic.jvm.gc;
 
 public class MyObject {
     public MyObject childNode;

@@ -1,4 +1,4 @@
-package com.interview.javabasic.jvm.model;
+package basic.jvm.model;
 
 import java.util.Random;
 

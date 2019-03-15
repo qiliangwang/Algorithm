@@ -1,4 +1,4 @@
-package com.interview.javabasic.jvm.gc;
+package basic.jvm.gc;
 
 import java.lang.ref.Reference;
 import java.lang.ref.ReferenceQueue;

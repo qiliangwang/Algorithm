@@ -1,6 +1,6 @@
-package com.interview.javabasic.socket;
+package basic.socket;
 
-import com.interview.javabasic.thread.MyThread;
+import basic.thread.MyThread;
 
 import java.net.ServerSocket;
 import java.net.Socket;

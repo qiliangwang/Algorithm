@@ -1,4 +1,4 @@
-package com.interview.javabasic.reflect;
+package basic.reflect;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;

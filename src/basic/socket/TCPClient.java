@@ -1,4 +1,4 @@
-package com.interview.javabasic.socket;
+package basic.socket;
 
 import java.io.InputStream;
 import java.io.OutputStream;

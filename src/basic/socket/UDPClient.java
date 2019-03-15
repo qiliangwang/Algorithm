@@ -1,4 +1,4 @@
-package com.interview.javabasic.socket;
+package basic.socket;
 
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;

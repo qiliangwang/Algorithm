@@ -1,4 +1,4 @@
-package com.interview.javabasic.reflect;
+package basic.reflect;
 
 public class Robot {
     private String name;

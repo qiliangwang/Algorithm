@@ -1,4 +1,4 @@
-package com.interview.javabasic.jvm.model;
+package basic.jvm.model;
 
 public class ByteCodeSample {
     public static int add(int a, int b) {
