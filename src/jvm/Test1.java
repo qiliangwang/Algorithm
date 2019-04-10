@@ -7,6 +7,10 @@ public class Test1 {
 		int c = a + b;
 		System.out.println(c);
 	}
+
+	public static int gcd(int x, int y) {
+		return x == 0 ? y : gcd(y % x, x);
+	}
 	/***
 	 public static void main(java.lang.String);
     descriptor: (Ljava/lang/String;)V
@@ -15,7 +19,7 @@ public class Test1 {
       # 操作数栈的深度2
       # 本地变量表最大长度（slot为单位），64位的是2，其他是1，索引从0开始，如果是非static方法索引0代表this，后面是入参，后面是本地变量
       # 1个参数，实例方法多一个this参数
-      stack=2, locals=4, args_size=1
+      stack=2,  =4, args_size=1
          0: iconst_2  #常量2压栈
          1: istore_1  #出栈保存到本地变量1里面
          2: iconst_3  #常量3压栈
