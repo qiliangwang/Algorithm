@@ -34,10 +34,11 @@ public class WaitSleepDemo {
                         System.out.println("thread B get lock");
                         System.out.println("thread B is sleeping 10 ms");
                         Thread.sleep(10);
-                        lock.notifyAll();
-                        Thread.yield();
-                        Thread.sleep(2000);
+//                        lock.notifyAll();
+//                        Thread.yield();
+//                        Thread.sleep(20000);
                         System.out.println("thread B is done");
+                        lock.notify();
                     } catch (InterruptedException e){
                         e.printStackTrace();
                     }
