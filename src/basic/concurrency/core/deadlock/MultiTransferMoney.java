@@ -1,6 +1,6 @@
 package basic.concurrency.core.deadlock;
 
-import deadlock.TransferMoney.Account;
+import basic.concurrency.core.deadlock.TransferMoney.Account;
 import java.util.Random;
 
 /**

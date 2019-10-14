@@ -1,6 +1,6 @@
 package basic.concurrency.core.threadcoreknowledge.createthreads.wrongways;
 
-import threadcoreknowledge.createthreads.ThreadStyle;
+//import threadcoreknowledge.createthreads.ThreadStyle;
 
 /**
  * 描述：     匿名内部类的方式
