@@ -3,6 +3,7 @@ package leetcode.solutions;
 import leetcode.base.TreeNode;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
 /**
@@ -47,6 +48,21 @@ public class Solution230 {
         return nums.get(k - 1);
     }
 
+
+    public int kthSmallest2(TreeNode root, int k) {
+        LinkedList<TreeNode> stack = new LinkedList<TreeNode>();
+
+        while (true) {
+            while (root != null) {
+                stack.add(root);
+                root = root.left;
+            }
+            root = stack.removeLast();
+            if (--k == 0) {return root.val;}
+            root = root.right;
+        }
+    }
+
     private List<Integer> inOrder(TreeNode node, List<Integer> list) {
         if (node == null) {return list;}
         inOrder(node.left, list);
@@ -66,7 +82,7 @@ public class Solution230 {
 
         root.left.left.left = new TreeNode(1);
 
-        int i = new Solution230().kthSmallest(root, 1);
+        int i = new Solution230().kthSmallest2(root, 5);
         System.out.println(i);
     }
 }
