@@ -8,10 +8,10 @@ import java.util.Date;
  */
 public class DateTest {
     public static void main(String[] args) {
-        Date effectiveTime = new Date(1574325872000L);
+        Date effectiveTime = new Date(1575216000000L);
         System.out.println(effectiveTime);
 //        boolean res = effectiveTime.before(new Date());
-        boolean res = new Date().after(effectiveTime);
-        System.out.println(res);
+//        boolean res = new Date().after(effectiveTime);
+//        System.out.println(res);
     }
 }

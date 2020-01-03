@@ -18,6 +18,7 @@ public class QuickSort {
 
         int j = l; // arr[l+1...j] < v ; arr[j+1...i) > v
         for( int i = l + 1 ; i <= r ; i ++ )
+            //v small large -> small v large
             if( arr[i].compareTo(v) < 0 ){
                 j ++;
                 swap(arr, j, i);
@@ -31,11 +32,11 @@ public class QuickSort {
     // 递归使用快速排序,对arr[l...r]的范围进行排序
     private static void sort(Comparable[] arr, int l, int r){
 
-        // 对于小规模数组, 使用插入排序
-        if( r - l <= 15 ){
-            InsertionSort.sort(arr, l, r);
-            return;
-        }
+        // 对于小规模数组, 使用插入排序 速度优化
+//        if( r - l <= 15 ){
+//            InsertionSort.sort(arr, l, r);
+//            return;
+//        }
 
         int p = partition(arr, l, r);
         sort(arr, l, p-1 );
