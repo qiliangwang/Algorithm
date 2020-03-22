@@ -1,3 +1,77 @@
+使用thread local来实现多线程计算
+
+先看一个简单的web项目
+
+```shell
+C:\Users\Administrator\Downloads\Apache24\bin>ab -n 10000 -c 100 localhost:8080/add
+```
+
+
+
+```java
+package com.iceberg.netty;
+
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import java.util.HashSet;
+import java.util.Set;
+import java.util.concurrent.ConcurrentHashMap;
+
+@RestController
+public class StatController {
+
+    static Set<Val<Integer>> set = new HashSet<>();
+
+    static Set<Val<Integer>> concurrentSet = null;
+
+    static {
+        ConcurrentHashMap<Val<Integer>, Integer> map = new ConcurrentHashMap<>();
+        concurrentSet = map.newKeySet();
+    }
+
+    static ThreadLocal<Val<Integer>> c = new ThreadLocal<Val<Integer>>() {
+        @Override
+        protected Val<Integer> initialValue() {
+            Val<Integer> v = new Val<>();
+            v.set(0);
+            //if no synchronized then failed or using concurrent Set
+//            synchronized (StatController.class) {
+//                set.add(v);
+//            }
+            concurrentSet.add(v);
+            return v;
+        }
+    };
+
+    void doAdd() throws InterruptedException {
+        Thread.sleep(100);
+        Val<Integer> v = c.get();
+        v.set(v.get() + 1);
+    }
+    @GetMapping("/stat")
+    public Integer stat() {
+        System.out.print("set size is:" + set.size());
+        return concurrentSet.stream()
+                .map(x -> x.get())
+                .reduce((x, y) -> x + y).get();
+    }
+
+    @GetMapping("/add")
+    public Integer add() {
+        try {
+            doAdd();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        return 0;
+    }
+}
+
+```
+
+
+
 threadLocal在web领域的使用
 
 先定义一个Holder类
