@@ -16,21 +16,10 @@
 @Min @Size @Digits @Future @Negative
 
 ```
-分组校验
+
 @Validated({First.class, Second.class})
 
-```
-package com.imooc.zhangxiaoxi.validation;
-
-import org.hibernate.validator.constraints.Length;
-
-import javax.validation.GroupSequence;
-import javax.validation.Valid;
-import javax.validation.constraints.*;
-import javax.validation.groups.Default;
-import java.util.Date;
-import java.util.List;
-
+```java
 /**
  * 待验证对象实体类
  * 用户信息类
@@ -110,6 +99,8 @@ public class UserInfo {
 }
 
 ```
+
+### 分组校验
 
 ```
 @RequestMapping("/save")  
@@ -192,3 +183,17 @@ public class SubAccountValidator implements ConstraintValidator<SubAccountValida
 ```
 
 使用validation来实现一个注解，这样就可以对字段进行校验了。这样把逻辑都包装到一个类中，更加符合复用的概念。
+
+
+
+### @Validated和@Valid的区别
+
+Spring Validation验证框架对参数的验证机制提供了@Validated（Spring's JSR-303规范，是标准JSR-303的一个变种），javax提供了@Valid（标准JSR-303规范）
+
+在检验Controller的入参是否符合规范时，使用@Validated或者@Valid在基本验证功能上没有太多区别。但是在分组、注解地方、嵌套验证等功能上两个有所不同：
+
+
+
+@Validated：用在方法入参上无法单独提供嵌套验证功能。不能用在成员属性（字段）上，也无法提示框架进行嵌套验证。能配合嵌套验证注解@Valid进行嵌套验证。
+
+@Valid：用在方法入参上无法单独提供嵌套验证功能。能够用在成员属性（字段）上，提示验证框架进行嵌套验证。能配合嵌套验证注解@Valid进行嵌套验证。

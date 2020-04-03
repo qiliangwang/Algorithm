@@ -1,0 +1,354 @@
+---
+title: Kafka API
+date: 2019-07-11 22:40:12
+tags:
+---
+
+
+# kafka api
+
+consumer
+
+```java
+public class MyConsumer {
+
+    private static KafkaConsumer<String, String> consumer;
+    private static Properties properties;
+
+    static {
+
+        properties = new Properties();
+
+        properties.put("bootstrap.servers", "192.168.0.108:9092");
+        properties.put("key.deserializer",
+                "org.apache.kafka.common.serialization.StringDeserializer");
+        properties.put("value.deserializer",
+                "org.apache.kafka.common.serialization.StringDeserializer");
+        properties.put("group.id", "test");
+    }
+
+    private static void generalConsumeMessageAutoCommit() {
+
+        properties.put("enable.auto.commit", true);
+        consumer = new KafkaConsumer<>(properties);
+        consumer.subscribe(Collections.singleton("iceberg-kafka-study-x"));
+
+        try {
+            while (true) {
+
+                boolean flag = true;
+
+                ConsumerRecords<String, String> records = consumer.poll(100);
+
+                for (ConsumerRecord<String, String> record : records) {
+                    System.out.println(String.format(
+                            "topic = %s, partition = %s, key = %s, value = %s",
+                            record.topic(), record.partition(),
+                            record.key(), record.value()
+                    ));
+                    if (record.value().equals("done")) {
+                        flag = false;
+                    }
+                }
+
+                if (!flag) {
+                    break;
+                }
+            }
+        } finally {
+            consumer.close();
+        }
+    }
+
+    private static void generalConsumeMessageSyncCommit() {
+
+        properties.put("auto.commit.offset", false);
+        consumer = new KafkaConsumer<>(properties);
+        consumer.subscribe(Collections.singletonList("iceberg-kafka-study-x"));
+
+        while (true) {
+            boolean flag = true;
+
+            ConsumerRecords<String, String> records =
+                    consumer.poll(100);
+            for (ConsumerRecord<String, String> record : records) {
+                System.out.println(String.format(
+                        "topic = %s, partition = %s, key = %s, value = %s",
+                        record.topic(), record.partition(),
+                        record.key(), record.value()
+                ));
+                if (record.value().equals("done")) {
+                    flag = false;
+                }
+            }
+
+            try {
+                consumer.commitSync();
+            } catch (CommitFailedException ex) {
+                System.out.println("commit failed error: "
+                        + ex.getMessage());
+            }
+
+            if (!flag) {
+                break;
+            }
+        }
+    }
+
+    private static void generalConsumeMessageAsyncCommit() {
+
+        properties.put("auto.commit.offset", false);
+        consumer = new KafkaConsumer<>(properties);
+        consumer.subscribe(Collections.singletonList("iceberg-kafka-study-x"));
+
+        while (true) {
+            boolean flag = true;
+
+            ConsumerRecords<String, String> records =
+                    consumer.poll(100);
+            for (ConsumerRecord<String, String> record : records) {
+                System.out.println(String.format(
+                        "topic = %s, partition = %s, key = %s, value = %s",
+                        record.topic(), record.partition(),
+                        record.key(), record.value()
+                ));
+                if (record.value().equals("done")) {
+                    flag = false;
+                }
+            }
+
+            // commit A, offset 2000
+            // commit B, offset 3000
+            consumer.commitAsync();
+
+            if (!flag) {
+                break;
+            }
+        }
+    }
+
+    private static void generalConsumeMessageAsyncCommitWithCallback() {
+
+        properties.put("auto.commit.offset", false);
+        consumer = new KafkaConsumer<>(properties);
+        consumer.subscribe(Collections.singletonList("iceberg-kafka-study-x"));
+
+        while (true) {
+            boolean flag = true;
+
+            ConsumerRecords<String, String> records =
+                    consumer.poll(100);
+            for (ConsumerRecord<String, String> record : records) {
+                System.out.println(String.format(
+                        "topic = %s, partition = %s, key = %s, value = %s",
+                        record.topic(), record.partition(),
+                        record.key(), record.value()
+                ));
+                if (record.value().equals("done")) {
+                    flag = false;
+                }
+            }
+
+            consumer.commitAsync((map, e) -> {
+                if (e != null) {
+                    System.out.println("commit failed for offsets: " +
+                            e.getMessage());
+                }
+            });
+
+            if (!flag) {
+                break;
+            }
+        }
+    }
+
+    @SuppressWarnings("all")
+    private static void mixSyncAndAsyncCommit() {
+
+        properties.put("auto.commit.offset", false);
+        consumer = new KafkaConsumer<>(properties);
+        consumer.subscribe(Collections.singletonList("iceberg-kafka-study-x"));
+
+        try {
+
+            while (true) {
+                ConsumerRecords<String, String> records =
+                        consumer.poll(100);
+
+                for (ConsumerRecord<String, String> record : records) {
+                    System.out.println(String.format(
+                            "topic = %s, partition = %s, key = %s, " +
+                                    "value = %s",
+                            record.topic(), record.partition(),
+                            record.key(), record.value()
+                    ));
+                }
+
+                consumer.commitAsync();
+            }
+        } catch (Exception ex) {
+            System.out.println("commit async error: " + ex.getMessage());
+        } finally {
+            try {
+                consumer.commitSync();
+            } finally {
+                consumer.close();
+            }
+        }
+    }
+
+    public static void main(String[] args) {
+
+//        generalConsumeMessageAutoCommit();
+
+//        generalConsumeMessageSyncCommit();
+
+        generalConsumeMessageAsyncCommit();
+
+        generalConsumeMessageAsyncCommitWithCallback();
+    }
+}
+```
+
+
+
+producer
+
+```java
+public class MyProducer {
+
+    private static KafkaProducer<String, String> producer;
+
+    static {
+
+        Properties properties = new Properties();
+        properties.put("bootstrap.servers", "192.168.0.108:9092");
+        properties.put("key.serializer",
+                "org.apache.kafka.common.serialization.StringSerializer");
+        properties.put("value.serializer",
+                "org.apache.kafka.common.serialization.StringSerializer");
+
+        properties.put("partitioner.class",
+                "com.iceberg.kafkastudy.CustomPartitioner");
+
+        producer = new KafkaProducer<>(properties);
+    }
+
+    private static void sendMessageForgetResult() {
+
+        ProducerRecord<String, String> record = new ProducerRecord<>(
+                "iceberg-kafka-study", "name", "ForgetResult"
+        );
+        producer.send(record);
+        producer.close();
+    }
+
+    private static void sendMessageSync() throws Exception {
+
+        ProducerRecord<String, String> record = new ProducerRecord<>(
+                "iceberg-kafka-study", "name", "sync"
+        );
+        RecordMetadata result = producer.send(record).get();
+
+        System.out.println(result.topic());
+        System.out.println(result.partition());
+        System.out.println(result.offset());
+
+        producer.close();
+    }
+
+    private static void sendMessageCallback() {
+
+        ProducerRecord<String, String> record = new ProducerRecord<>(
+                "iceberg-kafka-study-x", "name", "callback"
+        );
+        producer.send(record, new MyProducerCallback());
+
+        record = new ProducerRecord<>(
+                "iceberg-kafka-study-x", "name-x", "callback"
+        );
+        producer.send(record, new MyProducerCallback());
+
+        record = new ProducerRecord<>(
+                "iceberg-kafka-study-x", "name-y", "callback"
+        );
+        producer.send(record, new MyProducerCallback());
+
+        record = new ProducerRecord<>(
+                "iceberg-kafka-study-x", "name-z", "callback"
+        );
+        producer.send(record, new MyProducerCallback());
+
+        producer.close();
+    }
+
+    private static class MyProducerCallback implements Callback {
+
+        @Override
+        public void onCompletion(RecordMetadata recordMetadata, Exception e) {
+
+            if (e != null) {
+                e.printStackTrace();
+                return;
+            }
+
+            System.out.println(recordMetadata.topic());
+            System.out.println(recordMetadata.partition());
+            System.out.println(recordMetadata.offset());
+            System.out.println("Coming in MyProducerCallback");
+        }
+    }
+
+    public static void main(String[] args) throws Exception {
+
+//        sendMessageForgetResult();
+//        sendMessageSync();
+        sendMessageCallback();
+    }
+}
+```
+
+自定义分区
+
+```java
+public class CustomPartitioner implements Partitioner {
+
+    @Override
+    public int partition(String topic,
+                         Object key, byte[] keyBytes,
+                         Object value, byte[] valueBytes,
+                         Cluster cluster) {
+
+        List<PartitionInfo> partitionInfos = cluster.partitionsForTopic(topic);
+        int numPartitions = partitionInfos.size();
+
+        if (null == keyBytes || !(key instanceof String)) {
+            throw new InvalidRecordException("kafka message must have key");
+        }
+
+        if (numPartitions == 1) {
+            return 0;
+        }
+
+        if (key.equals("name")) {
+            return numPartitions - 1;
+        }
+
+        return Math.abs(Utils.murmur2(keyBytes)) % (numPartitions - 1);
+    }
+
+    @Override
+    public void close() {
+
+    }
+
+    @Override
+    public void configure(Map<String, ?> map) {
+
+    }
+}
+```
+
+
+
+
