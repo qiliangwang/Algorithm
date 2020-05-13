@@ -1,0 +1,20 @@
+AQS
+在JUC中很多的工具类都使用了AQS，AQS可以说是JUC的核心了，其实我们可以发现JUC中很多的工具类原理上都是一致的，类比java自带的synchorized底层使用的管程（monitor）
+其实AQS就是自己实现了monitor的细节
+
+Semaphone 内部有一个Sync类，Sync类继承了AQS
+
+AQS核心
+state
+控制线程抢锁和配合的FIFO队列
+期望协作工具类实现的获取/释放方法
+
+semaphore 中 state表示剩余的许可证数量
+countDownLatch中，表示还需要倒数的数量
+state是volatile的
+
+AQS本质是一个排队管理器，当多个线程争用一把锁的时候，必须有排队机制将那些没能拿到锁的线程串在一起。当锁释放时锁管理器会挑选一个合适的线程来占用这个刚刚释放的锁。
+AQS会维护一个等待的线程队列，把线程放到这个队列中
+
+期望协作工具类实现的获取/释放方法
+根据是否独占来重写tryAcquire/tryRelease(独占) 或 tryAcquireShared/tryReleaseShared（共享）
