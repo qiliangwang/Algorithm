@@ -1,5 +1,9 @@
 package test;
 
+
+import java.math.BigDecimal;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.Date;
 
 /**
@@ -8,10 +12,27 @@ import java.util.Date;
  */
 public class DateTest {
     public static void main(String[] args) {
-        int time = 10;
-        System.out.println(time * 10L);
+//        int time = 10;
+//        System.out.println(time * 10L);
+//
+//        System.out.println(new Date(1584001378000L));
 
-        System.out.println(new Date(1584001378000L));
+//      String hello = "1";
+//      BigDecimal bigDecimal = new BigDecimal(hello);
+//      System.out.println(bigDecimal);
+
+      String format = LocalDate.now().minusDays(1).format(DateTimeFormatter.ISO_DATE);
+      System.out.println(format);
+
+      String format1 = LocalDate.now().minusDays(0).format(DateTimeFormatter.ISO_DATE);
+      System.out.println(format1);
+
+      String format2 = LocalDate.now().format(DateTimeFormatter.ISO_DATE);
+      System.out.println(format2);
+
+      BigDecimal discountRateBD = new BigDecimal("80");
+      Integer integer = null;
+      System.out.println(BigDecimal.valueOf(integer).multiply(discountRateBD));
 //        Date effectiveTime = new Date(1582720691872L);
 //        System.out.println(effectiveTime);
 //
