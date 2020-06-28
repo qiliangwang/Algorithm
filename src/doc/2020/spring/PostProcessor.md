@@ -1,0 +1,8 @@
+BeanDefinitionRegistryPostProcessor 
+
+这个postProcessorr可以将自己框架的类注入到spring中，通过
+register.registerBeanDefinition()方法，
+比如mybatits就是这么用的，通过这个postProcessor将自己的类交给spring管理。鸡贼！！！
+
+BeanPostProcessor
+AOP是用这个实现的

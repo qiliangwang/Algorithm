@@ -20,7 +20,7 @@ class Solution14 {
 
         String[] dataTwo = {"dog", "racecar", "car"};
 
-        String result = new Solution14().longestCommonPrefix(dataTwo);
+        String result = new Solution14().longestCommonPrefix(dataOne);
         System.out.println(result);
     }
 }
