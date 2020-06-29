@@ -3,7 +3,9 @@ package basic.string;
 public class KMP {
 
     // a, b分别是主串和模式串；n, m分别是主串和模式串的长度。
-    public static int kmp(char[] a, int n, char[] b, int m) {
+    public static int kmp(char[] a, char[] b) {
+        int n = a.length;
+        int m = b.length;
         int[] next = getNexts(b, m);
         int j = 0;
         for (int i = 0; i < n; ++i) {
@@ -40,10 +42,10 @@ public class KMP {
 
     public static void main(String[] args) {
 
-        String s = "Here is a simple example";
-        String example = "example";
+        String a = "Here is a simple example";
+        String b = "example";
         KMP kmp = new KMP();
-//        int res = kmp.kmp(s.toCharArray(), example.toCharArray());
-//        System.out.println(res);
+        int res = kmp.kmp(a.toCharArray(), b.toCharArray());
+        System.out.println(res);
     }
 }
