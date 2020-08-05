@@ -4,258 +4,245 @@ import java.nio.charset.StandardCharsets;
 import java.util.Arrays;
 
 public class Input {
-	
-	public static final int EOF = 0;
-	private final int MAXLOOK = 16;//lookahead×î´ó³¤¶È
-	private final int MAXLEX = 1024;//·Ö´Êºó×î´ó³¤¶È
-	private final int BUFSIZE = (MAXLEX * 3) + (2 * MAXLOOK);
-	private       int endBuf = BUFSIZE;//»º³åÇø½áÊøµØÖ·
-	private final int DANGER = (endBuf - MAXLOOK);
-	private final int END = BUFSIZE;
-	private final byte[] startBuf = new byte[BUFSIZE];
-	
-	private int next = END;//Ö¸Ïòµ±Ç°Òª¶ÁÈëµÄ×Ö·ûÎ»ÖÃ
-	private int sMark = END;//µ±Ç°±»´Ê·¨·ÖÎöÆ÷·ÖÎöµÄ×Ö·û´®Î»ÖÃ
-	private int eMark = END;//µ±Ç°±»·ÖÎöµÄ×Ö·û´®½áÊøÎ»ÖÃ
-	private int pMark = END;//ÉÏÒ»¸ö±»·ÖÎöµÄ×Ö·û´®Î»ÖÃ
-	private int pLineNum = 0;
-	private int pLength = 0;
-	
-	private FileHandler fileHandler = null;
-	
-	private int lineNum = 1;//µ±Ç°ĞĞºÅ
-	private int mLine = 1;
-	
-	public boolean EofRead = false;//ÊÇ·ñÓĞ¿É¶ÁĞÅÏ¢
-	
-	public Input() {
-		;
-	}
-	
-	public boolean noMoreChars() {
-		return EofRead && (next >= endBuf);
-	}
-	
-	private FileHandler getFileHandler(String fileName) {
-		if (fileName != null) {
-			return new DiskFileHandler(fileName);
-		} else {
-			return new StdinHandler();
-		}
-	}
-	
-	public void iNewFile(String fileName) {
-		if(fileHandler != null) {
-			fileHandler.close();
-		}
-		
-		fileHandler = getFileHandler(fileName);
-		fileHandler.open();
-		
-		EofRead = false;
-		next     = END;
-		pMark    = END;
-		sMark    = END;
-		eMark    = END;
-		endBuf  = END;
-		lineNum   = 1;
-		mLine    = 1;
-	}
-	
-	public String iText() {
-		byte[] str = Arrays.copyOfRange(startBuf, sMark, sMark + iLength());
-		return new String(str, StandardCharsets.UTF_8);
-	}
-	
-	public int iLength() {
-		return eMark - sMark;
-	}
-	
-	public int iLineNum() {
-		return lineNum;
-	}
-	
-	public String iPText() {
-		byte[] str = Arrays.copyOfRange(startBuf, pMark, pMark + pLength);
-		return new String(str, StandardCharsets.UTF_8);
-	}
-	
-	public int iPLength() {
-		return pLength;
-	}
-	
-	public int iPLineNum() {
-		return pLineNum;
-	}
-	
-	public int iMarkStart() {
-		mLine = lineNum;
-		eMark = sMark = next;
-		return sMark;
-	}
-	
-	public int iMarkend() {
-		mLine = lineNum;
-		eMark = next;
-		return eMark;
-	}
-	
-	public int iMoveStart() {
-		if (sMark >= eMark) {
-			return -1;
-		}
-		else {
-			sMark++;
-			return sMark;
-		}
-	}
-	
-	public int iToMark() {
-		lineNum = mLine;
-		next = eMark;
-		return next;
-	}
-	
-	public int iMarkPrev() {
-		/*
-		 * Ö´ĞĞÕâ¸öº¯Êıºó£¬ÉÏÒ»¸ö±»´Ê·¨½âÎöÆ÷½âÎöµÄ×Ö·û´®½«ÎŞ·¨ÔÚ»º³åÇøÖĞÕÒµ½
-		 */
-		pMark = sMark;
-		pLineNum = lineNum;
-		pLength = eMark - sMark;
-		return pMark;
-	}
-	
-	public byte iAdvance() {
-		/*
-		 * ´Ó»º³åÇø»ñÈ¡×Ö·û£¬next¼Ó1£¬Èç¹ûNextµÄÎ»ÖÃ¾àÀë»º³åÇøµÄÂß¼­Ä©Î²(End_buf)²»µ½
-		 * MAXLOOK Ê±£¬ ½«»á¶Ô»º³åÇø½øĞĞÒ»´Îflush ²Ù×÷
-		 */
-		if(noMoreChars()) {
-			return 0;
-		}
-		
-		//System.out.println(EofRead);
-		//int i;
-		if(EofRead == false && iFlush(false) < 0) {
-			//System.out.println(i);
-			return -1;
-		}
-		
-		if(startBuf[next] == '\n') {
-			lineNum++;
-		}
-		
-		return startBuf[next++];
-	}
-	
-	public static int NO_MORE_CHARS_TO_READ = 0;
-	public static int FLUSH_OK = 1;
-	public static int FLUSH_FAIL = -1;
-	
-	private int iFlush(boolean force) {
-		
-		int copy_amt, shift_amt, left_edge;
-		if (noMoreChars()) {
-			return NO_MORE_CHARS_TO_READ;
-		}
-		
-		if (EofRead) {
-			//ÊäÈëÁ÷ÒÑ¾­Ã»ÓĞ¶àÓàĞÅÏ¢ÁË
-			return FLUSH_OK;
-		}
-		
-		if (next > DANGER || force) {
-			left_edge = pMark < sMark ? pMark : sMark;
-			shift_amt = left_edge;
-			if (shift_amt < MAXLEX) {
-				if (!force) {
-					return FLUSH_FAIL;
-				}
-				
-				left_edge = iMarkStart();
-				iMarkPrev();
-				shift_amt = left_edge;
-			}
-			
-			copy_amt = endBuf - left_edge;
-			System.arraycopy(startBuf, 0, startBuf, left_edge, copy_amt);
-			
-			if (iFillBuf(copy_amt) == 0) {
-				System.err.println("Internal Error, iFlush: Buffer full, can't read");
-			}
-			
-			if (pMark != 0) {
-				pMark -= shift_amt;
-			}
-			
-			sMark -= shift_amt;
-			eMark -= shift_amt;
-			next  -= shift_amt;
-		}
-		
-		return FLUSH_OK;
-	}
-	
-	private int iFillBuf(int starting_at) {
-		/*
-		 * ´ÓÊäÈëÁ÷ÖĞ¶ÁÈ¡ĞÅÏ¢£¬Ìî³ä»º³åÇøÆ½ÒÆºóµÄ¿ÉÓÃ¿Õ¼ä£¬¿ÉÓÃ¿Õ¼äµÄ³¤¶ÈÊÇ´Óstarting_atÒ»Ö±µ½End_buf
-		 * Ã¿´Î´ÓÊäÈëÁ÷ÖĞ¶ÁÈ¡µÄÊı¾İ³¤¶ÈÊÇMAXLEXĞ´ÕûÊı±¶
-		 * 
-		 */
-		
-		int need; //ĞèÒª´ÓÊäÈëÁ÷ÖĞ¶ÁÈëµÄÊı¾İ³¤¶È
-		int got = 0; //Êµ¼ÊÉÏ´ÓÊäÈëÁ÷ÖĞ¶Áµ½µÄÊı¾İ³¤¶È
-		need = ((END - starting_at) / MAXLEX) * MAXLEX;
-		if (need < 0) {
-			System.err.println("Internal Error (iFillbuf): Bad read-request starting addr.");
-		}
-		
-		if (need == 0) {
-			return 0;
-		}
-		
-		if ((got = fileHandler.read(startBuf, starting_at, need)) == -1) {
-			System.err.println("Can't read input file");
-		}
-		
-		endBuf = starting_at + got;
-		//System.out.println(got + "  " + need);
-		if (got < need) {
-			//ÊäÈëÁ÷ÒÑ¾­µ½Ä©Î²
-			EofRead = true;
-		}
-		
-		return got;
-	}
+  private final int MAXLOOK = 16; //look ahead æœ€å¤šå­—ç¬¦æ•°
+  private final int MAXLEX = 1024; //åˆ†è¯åå­—ç¬¦ä¸²çš„æœ€å¤§é•¿åº¦
+  private final int BUFSIZE = (MAXLEX * 3) + (2 * MAXLOOK); //ç¼“å†²åŒºå¤§å°
+  private int End_buf = BUFSIZE; //ç¼“å†²åŒºçš„é€»è¾‘ç»“æŸåœ°å€
+  private final int DANGER = (End_buf - MAXLOOK);
+  private final int END = BUFSIZE;
+  private final byte[] Start_buf = new byte[BUFSIZE]; //ç¼“å†²åŒº
+  private int Next = END; //æŒ‡å‘å½“å‰è¦è¯»å…¥çš„å­—ç¬¦ä½ç½®
+  private int sMark = END; //å½“å‰è¢«è¯æ³•åˆ†æå™¨åˆ†æçš„å­—ç¬¦ä¸²ä½ç½®
+  private int eMark = END; //å½“å‰è¢«è¯æ³•åˆ†æå™¨åˆ†æçš„å­—ç¬¦ä¸²ç»“æŸä½ç½®
+  private int pMark = END; //ä¸Šä¸€ä¸ªè¢«è¯æ³•åˆ†æå™¨åˆ†æçš„å­—ç¬¦ä¸²èµ·å§‹ä½ç½®
+  private int pLineno = 0; //ä¸Šä¸€ä¸ªè¢«è¯æ³•åˆ†æå™¨åˆ†æçš„å­—ç¬¦ä¸²æ‰€åœ¨çš„è¡Œå·
+  private int pLength = 0; //ä¸Šä¸€ä¸ªè¢«è¯æ³•åˆ†æå™¨åˆ†æçš„å­—ç¬¦ä¸²é•¿åº¦
 
-	public boolean iPushBack(int n) {
-		/*
-		 * °ÑÔ¤¶ÁÈ¡µÄÈô¸É¸ö×Ö·ûÍË»Ø»º³åÇø
-		 */
-		while (--n >= 0 && next > sMark) {
-			if (startBuf[--next] == '\n' || startBuf[next] == '\0') {
-				--lineNum;
-			}
-		}
-		
-		if (next < eMark) {
-			eMark = next;
-			mLine = lineNum;
-		}
-		
-		return (next > sMark);
-	}
-	
-	public byte iLookAhead(int n) {
-		/*
-		 * Ô¤¶ÁÈ¡Èô¸É¸ö×Ö·û
-		 */
-		byte p = startBuf[next + n - 1];
-		if (EofRead && next + n - 1 >= endBuf) {
-			return EOF;
-		}
-		
-		return (next + n - 1 < 0 || next + n - 1 >= endBuf) ? 0 : p;
-	}
+  private FileHandler fileHandler = null;
+
+  private int Lineno = 1;  //å½“å‰è¢«è¯æ³•åˆ†æå™¨åˆ†æçš„å­—ç¬¦ä¸²çš„è¡Œå·
+
+  private int Mline = 1;
+
+  private boolean Eof_read = false; //è¾“å…¥æµä¸­æ˜¯å¦è¿˜æœ‰å¯è¯»ä¿¡æ¯
+
+  private boolean noMoreChars() {
+    /*
+     * ç¼“å†²åŒºä¸­æ˜¯å¦è¿˜æœ‰å¯è¯»çš„å­—ç¬¦
+     */
+    return (Eof_read && Next >= End_buf);
+  }
+
+  private FileHandler getFileHandler(String fileName) {
+    if (fileName != null) {
+      return new DiskFileHandler(fileName);
+    } else {
+      return new StdInHandler();
+    }
+  }
+
+  public void ii_newFile(String fileName) {
+
+    if (fileHandler != null) {
+      fileHandler.Close();
+    }
+
+    fileHandler = getFileHandler(fileName);
+    fileHandler.Open();
+
+    Eof_read = false;
+    Next = END;
+    sMark = END;
+    eMark = END;
+    End_buf = END;
+    Lineno = 1;
+    Mline = 1;
+  }
+
+  public String ii_text() {
+    byte[] str = Arrays.copyOfRange(Start_buf, sMark, sMark + ii_length());
+    return new String(str, StandardCharsets.UTF_8);
+  }
+
+  public int ii_length() {
+    return eMark - sMark;
+  }
+
+  public int ii_lineno() {
+    return Lineno;
+  }
+
+  public String ii_ptext() {
+    byte[] str = Arrays.copyOfRange(Start_buf, pMark, pMark + pLength);
+    return new String(str, StandardCharsets.UTF_8);
+  }
+
+  public int ii_plength() {
+    return pLength;
+  }
+
+  public int ii_plineno() {
+    return pLineno;
+  }
+
+  public int ii_mark_start() {
+    Mline = Lineno;
+    eMark = sMark = Next;
+    return sMark;
+  }
+
+  public int ii_mark_end() {
+    Mline = Lineno;
+    eMark = Next;
+    return eMark;
+  }
+
+  public int ii_move_start() {
+    if (sMark >= eMark) {
+      return -1;
+    } else {
+      sMark++;
+      return sMark;
+    }
+  }
+
+  public int ii_to_mark() {
+    Lineno = Mline;
+    Next = eMark;
+    return Next;
+  }
+
+  public int ii_mark_prev() {
+    /*
+     * æ‰§è¡Œè¿™ä¸ªå‡½æ•°åï¼Œä¸Šä¸€ä¸ªè¢«è¯æ³•è§£æå™¨è§£æçš„å­—ç¬¦ä¸²å°†æ— æ³•åœ¨ç¼“å†²åŒºä¸­æ‰¾åˆ°
+     */
+    pMark = sMark;
+    pLineno = Lineno;
+    pLength = eMark - sMark;
+    return pMark;
+  }
+
+  public byte ii_advance() {
+    /*
+     * ii_advance() æ˜¯çœŸæ­£çš„è·å–è¾“å…¥å‡½æ•°ï¼Œä»–å°†æ•°æ®ä»è¾“å…¥æµä¸­è¯»å…¥ç¼“å†²åŒºï¼Œå¹¶ä»ç¼“å†²åŒºä¸­è¿”å›è¦è¯»å–çš„å­—ç¬¦
+     * å¹¶å°†NextåŠ ä¸€ï¼Œä»è€ŒæŒ‡å‘ä¸‹ä¸€ä¸ªè¦è¯»å–çš„å­—ç¬¦, å¦‚æœNextçš„ä½ç½®è·ç¦»ç¼“å†²åŒºçš„é€»è¾‘æœ«å°¾(End_buf)ä¸åˆ°
+     * MAXLOOK æ—¶ï¼Œ å°†ä¼šå¯¹ç¼“å†²åŒºè¿›è¡Œä¸€æ¬¡flush æ“ä½œ
+     */
+
+    if (noMoreChars()) {
+      return 0;
+    }
+
+    if (Eof_read == false && ii_flush(false) < 0) {
+      /*
+       * ä»è¾“å…¥æµè¯»å…¥æ•°æ®åˆ°ç¼“å†²åŒºæ—¶å‡ºé”™
+       */
+      return -1;
+    }
+
+    if (Start_buf[Next] == '\n') {
+      Lineno++;
+    }
+
+    return Start_buf[Next++];
+  }
+
+  public static int NO_MORE_CHARS_TO_READ = 0;
+  public static int FLUSH_OK = 1;
+  public static int FLUSH_FAIL = -1;
+
+  private int ii_flush(boolean force) {
+    /*
+     * flush ç¼“å†²åŒºï¼Œå¦‚æœNext æ²¡æœ‰è¶Šè¿‡Dangerçš„è¯ï¼Œé‚£å°±ä»€ä¹ˆéƒ½ä¸åš
+     * è¦ä¸ç„¶åƒä¸Šä¸€èŠ‚æ‰€è¯´çš„ä¸€æ ·å°†æ•°æ®è¿›è¡Œå¹³ç§»ï¼Œå¹¶ä»è¾“å…¥æµä¸­è¯»å…¥æ•°æ®ï¼Œå†™å…¥å¹³ç§»å
+     * æ‰€äº§ç”Ÿçš„ç©ºé—´
+     *                            pMark                     DANGER
+     *                              |                          |
+     *     Start_buf              sMark         eMark          | Next  End_buf
+     *         |                    | |           |            |  |      |
+     *         V                    V V           V            V  V      V
+     *         +---------------------------------------------------------+---------+
+     *         | å·²ç»è¯»å–çš„åŒºåŸŸ        |          æœªè¯»å–çš„åŒºåŸŸ                 | æµªè´¹çš„åŒºåŸŸ|
+     *         +--------------------------------------------------------------------
+     *         |<---shift_amt------>|<-----------copy_amt--------------->|
+     *         |<-------------------------BUFSIZE---------------------------------->|
+     *
+     *  æœªè¯»å–åŒºåŸŸçš„å·¦è¾¹ç•Œæ˜¯pMarkæˆ–sMark(ä¸¤è€…è¾ƒå°çš„é‚£ä¸ª),æŠŠ æœªè¯»å–åŒºåŸŸå¹³ç§»åˆ°æœ€å·¦è¾¹è¦†ç›–å·²ç»è¯»å–åŒºåŸŸï¼Œè¿”å›1
+     *  å¦‚æœflushæ“ä½œæˆåŠŸï¼Œ-1å¦‚æœæ“ä½œå¤±è´¥ï¼Œ0 å¦‚æœè¾“å…¥æµä¸­å·²ç»æ²¡æœ‰å¯ä»¥è¯»å–çš„å¤šä½™å­—ç¬¦ã€‚å¦‚æœforce ä¸º true
+     *  é‚£ä¹ˆä¸ç®¡Nextæœ‰æ²¡æœ‰è¶Šè¿‡Danger,éƒ½ä¼šå¼•å‘Flushæ“ä½œ
+     */
+
+    int copy_amt, shift_amt, left_edge;
+    if (noMoreChars()) {
+      return NO_MORE_CHARS_TO_READ;
+    }
+
+    if (Eof_read) {
+      //è¾“å…¥æµå·²ç»æ²¡æœ‰å¤šä½™ä¿¡æ¯äº†
+      return FLUSH_OK;
+    }
+
+    if (Next > DANGER || force) {
+      left_edge = pMark < sMark ? pMark : sMark;
+      shift_amt = left_edge;
+      if (shift_amt < MAXLEX) {
+        if (!force) {
+          return FLUSH_FAIL;
+        }
+
+        left_edge = ii_mark_start();
+        ii_mark_prev();
+        shift_amt = left_edge;
+      }
+
+      copy_amt = End_buf - left_edge;
+      System.arraycopy(Start_buf, 0, Start_buf, left_edge, copy_amt);
+
+      if (ii_fillbuf(copy_amt) == 0) {
+        System.err.println("Internal Error, ii_flush: Buffer full, can't read");
+      }
+
+      if (pMark != 0) {
+        pMark -= shift_amt;
+      }
+
+      sMark -= shift_amt;
+      eMark -= shift_amt;
+      Next -= shift_amt;
+    }
+
+    return FLUSH_OK;
+  }
+
+  private int ii_fillbuf(int starting_at) {
+    /*
+     * ä»è¾“å…¥æµä¸­è¯»å–ä¿¡æ¯ï¼Œå¡«å……ç¼“å†²åŒºå¹³ç§»åçš„å¯ç”¨ç©ºé—´ï¼Œå¯ç”¨ç©ºé—´çš„é•¿åº¦æ˜¯ä»starting_atä¸€ç›´åˆ°End_buf
+     * æ¯æ¬¡ä»è¾“å…¥æµä¸­è¯»å–çš„æ•°æ®é•¿åº¦æ˜¯MAXLEXå†™æ•´æ•°å€
+     *
+     */
+
+    int need; //éœ€è¦ä»è¾“å…¥æµä¸­è¯»å…¥çš„æ•°æ®é•¿åº¦
+    int got = 0; //å®é™…ä¸Šä»è¾“å…¥æµä¸­è¯»åˆ°çš„æ•°æ®é•¿åº¦
+    need = ((END - starting_at) / MAXLEX) * MAXLEX;
+    if (need < 0) {
+      System.err.println("Internal Error (ii_fillbuf): Bad read-request starting addr.");
+    }
+
+    if (need == 0) {
+      return 0;
+    }
+
+    if ((got = fileHandler.Read(Start_buf, starting_at, need)) == -1) {
+      System.err.println("Can't read input file");
+    }
+
+    End_buf = starting_at + got;
+    if (got < need) {
+      //è¾“å…¥æµå·²ç»åˆ°æœ«å°¾
+      Eof_read = true;
+    }
+
+    return got;
+  }
+
 }

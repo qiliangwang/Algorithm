@@ -1,27 +1,25 @@
 package inputsystem;
 
+import java.io.InputStream;
+
 public class DiskFileHandler implements FileHandler {
 
-	public DiskFileHandler(String fileName) {
-		
-	}
-	
-	@Override
-	public void open() {
-		// TODO 自动生成的方法存根
-		
-	}
+  public DiskFileHandler(String name) {
 
-	@Override
-	public int close() {
-		// TODO 自动生成的方法存根
-		return 0;
-	}
+  }
 
-	@Override
-	public int read(byte[] buf, int begin, int len) {
-		// TODO 自动生成的方法存根
-		return 0;
-	}
+  @Override
+  public void Open() {
 
+  }
+
+  @Override
+  public int Close() {
+    return 0;
+  }
+
+  @Override
+  public int Read(byte[] buf, int begin, int len) {
+    return 0;
+  }
 }
