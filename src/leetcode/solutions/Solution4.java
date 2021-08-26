@@ -1,5 +1,11 @@
 package leetcode.solutions;
 
+/**
+ * 这个的复杂度是log(min(m,n)) 因为中位数其实是中间位置的数 所以这个中间其实是来源
+ * 与2个数组，第一个数组贡献一部分，第二个数组贡献一部分 一起贡献的位置是中间的位置
+ * 所以其实是对小的数组进行binerySearch 确认是否符合要求（l1 l2 < r1 r2)排列组合4种关系
+ * 但是由于之前有约束l1 < r1 l2 < r2 所以只需要保证l1 < r2 l2 < r1即可
+ */
 public class Solution4 {
 
     public double findMedianSortedArrays(int[] numbers1, int[] numbers2) {
@@ -10,6 +16,7 @@ public class Solution4 {
         int length = numbers1.length +  numbers2.length;
         int cut1 = 0;
         int cut2 = 0;
+
         int left = 0;
         int right = numbers1.length;
         while (cut1 <= numbers1.length) {
@@ -42,8 +49,8 @@ public class Solution4 {
     public static void main(String[] args) {
 //        int[] numbers1 = {1, 2};
 //        int[] numbers2 = {3, 4};
-        int[] numbers1 = {1};
-        int[] numbers2 = {1};
+        int[] numbers1 = {1, 3, 5, 7, 9};
+        int[] numbers2 = {2, 3, 4, 5};
         double result = new Solution4().findMedianSortedArrays(numbers1, numbers2);
         System.out.println(result);
     }

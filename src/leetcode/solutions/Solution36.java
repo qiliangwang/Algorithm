@@ -4,8 +4,31 @@ import java.util.HashSet;
 
 public class Solution36 {
 
+  private static volatile Solution36 INSTENCE;
 
-    /**
+  public static Solution36 getInstance() {
+    if (INSTENCE == null) {
+      synchronized (Solution36.class) {
+        if (INSTENCE == null) {
+          INSTENCE = new Solution36();
+        }
+      }
+    }
+    return INSTENCE;
+  }
+
+  static {
+    System.out.println("static java block");
+  }
+
+  {
+    System.out.println("java block");
+  }
+  private Solution36() {
+    System.out.println("constructor");
+  }
+
+  /**
      * Determine if a 9x9 Sudoku board is valid. Only the filled cells need to be validated according to the following rules:
      *
      * Each row must contain the digits 1-9 without repetition.
@@ -40,6 +63,7 @@ public class Solution36 {
                 // column valid
                 if (board[j][i] != '.' && !column.add(board[j][i])) return false;
                 //cube valid
+                System.out.println(i + " " + j + ":" + calRowIndex(i, j) + " " + calColIndex(i, j));
                 if (board[calRowIndex(i, j)][calColIndex(i, j)] != '.' && !cube.add(board[calRowIndex(i, j)][calColIndex(i, j)])) return false;
             }
         }
@@ -61,18 +85,20 @@ public class Solution36 {
 
     public static void main(String[] args) {
 
-        char[][] board = {
-                {'5', '3', '.', '.', '7', '.', '.', '.', '.'},
-                {'6', '.', '.', '1', '9', '5', '.', '.', '.'},
-                {'.', '9', '8', '.', '.', '.', '.', '6', '.'},
-                {'8', '.', '.', '.', '6', '.', '.', '.', '3'},
-                {'4', '.', '.', '8', '.', '3', '.', '.', '1'},
-                {'7', '.', '.', '.', '2', '.', '.', '.', '6'},
-                {'.', '6', '.', '.', '.', '.', '2', '8', '.'},
-                {'.', '.', '.', '4', '1', '9', '.', '.', '5'},
-                {'.', '.', '.', '.', '8', '.', '.', '7', '9'}};
-        boolean result = new Solution36().isValidSudoku(board);
+//      Solution36 solution36 = new Solution36();
 
-        System.out.println(result);
+//      char[][] board = {
+//                {'5', '3', '.', '.', '7', '.', '.', '.', '.'},
+//                {'6', '.', '.', '1', '9', '5', '.', '.', '.'},
+//                {'.', '9', '8', '.', '.', '.', '.', '6', '.'},
+//                {'8', '.', '.', '.', '6', '.', '.', '.', '3'},
+//                {'4', '.', '.', '8', '.', '3', '.', '.', '1'},
+//                {'7', '.', '.', '.', '2', '.', '.', '.', '6'},
+//                {'.', '6', '.', '.', '.', '.', '2', '8', '.'},
+//                {'.', '.', '.', '4', '1', '9', '.', '.', '5'},
+//                {'.', '.', '.', '.', '8', '.', '.', '7', '9'}};
+//        boolean result = new Solution36().isValidSudoku(board);
+//
+//        System.out.println(result);
     }
 }

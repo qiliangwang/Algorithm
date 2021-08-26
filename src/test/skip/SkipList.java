@@ -1,4 +1,4 @@
-package test;
+package test.skip;
 
 
 /**
@@ -123,24 +123,6 @@ public class SkipList {
 
       return builder.toString();
     }
-  }
-
-  public static void main(String[] args) {
-    SkipList skipList = new SkipList();
-    for (int i = 0; i < 100; i ++) {
-      skipList.insert(i);
-    }
-    skipList.printAll();
-    for (int i = 0; i < 100; i ++) {
-      skipList.insert(i + 100);
-    }
-    skipList.printAll();
-
-    skipList.find(1);
-    skipList.find(50);
-
-    skipList.find(90);
-
   }
 
 }

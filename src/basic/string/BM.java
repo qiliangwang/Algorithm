@@ -4,6 +4,15 @@ public class BM {
 
     private static final int SIZE = 256; // 全局变量或成员变量
 
+  /**
+   * 模式串对于的idx
+   * example
+   * e -> 0
+   * x -> 1
+   * @param b
+   * @param m
+   * @param bc
+   */
     private void generateBC(char[] b, int m, int[] bc) {
         for (int i = 0; i < SIZE; ++i) {
             bc[i] = -1; // 初始化bc

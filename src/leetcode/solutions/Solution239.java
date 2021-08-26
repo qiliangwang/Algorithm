@@ -6,6 +6,8 @@ import java.util.LinkedList;
 public class Solution239 {
 
     /**
+     * 这个的关键是要维持queue的头上是最大的，如果后面的元素比前面的大，那么需要把前面的元素给remove （保持Q的单调性（可以单调递减））
+     *
      * Given an array nums, there is a sliding window of size k which is moving from the very left of the array to the very right.
      * You can only see the k numbers in the window. Each time the sliding window moves right by one position. Return the max sliding window.
      *
