@@ -29,5 +29,6 @@ public class Solution8 {
     public static void main(String[] args) {
         int result = new Solution8().myAtoi("9223372036854775808");
         System.out.println(result);
+        new Thread().stop();
     }
 }

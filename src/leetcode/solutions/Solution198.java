@@ -22,6 +22,17 @@ public class Solution198 {
         return memo[nums.length - 1];
     }
 
+
+    public int rob1(int[] nums) {
+        if (nums.length == 0) {return 0;}
+        int [] dp = new int[nums.length];
+        dp[0] = nums[0];
+        for (int i = 1; i < nums.length; i ++) {
+            dp[i] = Math.max(dp[i - 1], nums[i] + i - 2 >= 0 ? dp[i - 2] : 0);
+        }
+        return dp[nums.length - 1];
+    }
+
     /**
      * recursive wat
      * @param nums

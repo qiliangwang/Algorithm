@@ -55,6 +55,8 @@ public class Solution116 {
 
 
     public static void main(String[] args) {
+        System.out.println((0 - 1) % 5);
+        System.out.println((0 - 1 + 5) % 5);
         new Solution116().connect(null);
     }
 }
