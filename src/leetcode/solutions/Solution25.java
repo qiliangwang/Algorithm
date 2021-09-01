@@ -2,11 +2,15 @@ package leetcode.solutions;
 
 
 import leetcode.base.ListNode;
+import leetcode.base.ListNodeUtil;
 
+/**
+ * 这个意思是按照k的间隔将list reverse 如果不符合k就不reverse
+ */
 public class Solution25 {
 
     public ListNode reverseKGroup(ListNode head, int k) {
-        if (head == null || head.next == null) return head;
+        if (head == null || head.next == null) {return head;}
 
         ListNode cur = head;
         int count = 0;
@@ -16,7 +20,9 @@ public class Solution25 {
         }
 
         if (count == k) {
+            //这里其实是将（k后面的处理一下）
             cur = reverseKGroup(cur, k);
+            //处理k的node 将node插到最前面即可
             while (count > 0) {
                 ListNode temp = head.next;
                 head.next = cur;
@@ -29,31 +35,11 @@ public class Solution25 {
         return head;
     }
 
-    public static void printLinkedList(ListNode node) {
-        while (node != null) {
-            if (node.next != null) {
-                System.out.print(node.val + "->");
-            } else {
-                System.out.print(node.val);
-            }
-            node = node.next;
-        }
-    }
-
-    public static ListNode generateLinkedList() {
-        ListNode dummy = new ListNode(0);
-        ListNode cur = dummy;
-        for (int i = 1; i <= 10; i ++) {
-            cur.next = new ListNode(i);
-            cur = cur.next;
-        }
-        return dummy.next;
-    }
 
     public static void main(String[] args) {
-
-        ListNode node = generateLinkedList();
-        ListNode result = new Solution25().reverseKGroup(node, 2);
-        printLinkedList(result);
+      ListNode node = ListNodeUtil.generateLinkedList(10);
+      ListNodeUtil.printLinkedList(node);
+      ListNode result = new Solution25().reverseKGroup(node, 10);
+      ListNodeUtil.printLinkedList(result);
     }
 }

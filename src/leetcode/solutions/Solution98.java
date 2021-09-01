@@ -34,14 +34,13 @@ public class Solution98 {
      */
     public boolean isValidBST(TreeNode root) {
 
-        return isValid(root, null, null);
+        return isValid(root, Integer.MIN_VALUE, Integer.MAX_VALUE);
     }
 
     private boolean isValid(TreeNode node, Integer min, Integer max) {
 
-        if (node == null) return true;
-        if (min != null && min >= node.val) return false;
-        if (max != null && max <= node.val) return false;
+        if (node == null) {return true;}
+        if (node.val <= min || node.val >= max) {return false;}
 
         return isValid(node.left, min, node.val) && isValid(node.right, node.val, max);
     }
@@ -56,7 +55,7 @@ public class Solution98 {
         TreeNode root2 = new TreeNode(5);
         root2.left = new TreeNode(1);
         root2.right = new TreeNode(4);
-        boolean result = new Solution98().isValidBST(null);
+        boolean result = new Solution98().isValidBST(root2);
         System.out.println(result);
     }
 }
