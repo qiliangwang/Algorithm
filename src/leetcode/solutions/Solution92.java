@@ -1,6 +1,7 @@
 package leetcode.solutions;
 
 import leetcode.base.ListNode;
+import leetcode.base.ListNodeUtil;
 
 public class Solution92 {
 
@@ -36,27 +37,25 @@ public class Solution92 {
         return dummy.next;
     }
 
-    public static void printLinkedList(ListNode node) {
-        while (node != null) {
-            if (node.next != null) {
-                System.out.print(node.val + "->");
-            } else {
-                System.out.print(node.val);
-            }
-            node = node.next;
-        }
+    /**
+     * 1 -> 2 -> 3
+     * @param head
+     * @param begin
+     * @param end
+     * @return
+     */
+    public ListNode reverseFromTo(ListNode head, int begin, int end) {
+       return head;
+
+
     }
+
 
     public static void main(String[] args) {
 
-        ListNode l1 = new ListNode(1);
-        l1.next = new ListNode(2);
-        l1.next.next = new ListNode(3);
-        l1.next.next.next = new ListNode(4);
-        l1.next.next.next.next = new ListNode(5);
-
-        ListNode result = new Solution92().reverseBetween(l1, 2, 4);
-
-        printLinkedList(result);
+        ListNode node = ListNodeUtil.generateLinkedList(10);
+        ListNodeUtil.printLinkedList(node);
+        ListNode result = new Solution92().reverseBetween(node, 2, 4);
+        ListNodeUtil.printLinkedList(result);
     }
 }

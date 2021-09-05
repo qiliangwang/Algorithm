@@ -4,6 +4,7 @@ public class Solution215 {
 
     public int findKthLargest(int[] nums, int k) {
         if (nums == null || nums.length == 0) return 0;
+
         int left = 0, right = nums.length - 1;
         while (true) {
             int partition = partition(nums, left, right);
@@ -19,8 +20,10 @@ public class Solution215 {
 
     private int partition(int[] nums, int left, int right) {
         int pivot = nums[left];
+
         int L = left + 1;
         int R = right;
+
         while (L <= R) {
             if (nums[L] < pivot && nums[R] > pivot) {
                 swap(nums, L++, R--);

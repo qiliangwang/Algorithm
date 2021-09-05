@@ -1,5 +1,7 @@
 package leetcode.solutions;
 
+import leetcode.base.MatrixUtil;
+
 /**
  * @author Vader Wang
  *
@@ -73,17 +75,7 @@ public class Solution130 {
         dfs(board, x, y - 1);
     }
 
-    private static void printBoard(char[][] board) {
-        int m = board.length - 1;
-        int n = board[0].length - 1;
-        for (int i = 0; i <= m; i ++) {
-            for (int j = 0; j <= n; j ++) {
-                System.out.print(board[i][j] + " ");
-            }
-            System.out.println();
-        }
-        System.out.println();
-    }
+
 
     public static void main(String[] args) {
         char[][] board = new char[][] {
@@ -92,8 +84,8 @@ public class Solution130 {
                 {'X', 'X', 'O', 'X'},
                 {'X', 'O', 'X', 'X'}};
 
-        printBoard(board);
+        MatrixUtil.printMatrix(board);
         new Solution130().solve(board);
-        printBoard(board);
+        MatrixUtil.printMatrix(board);
     }
 }

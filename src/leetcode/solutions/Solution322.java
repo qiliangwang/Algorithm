@@ -100,4 +100,26 @@ public class Solution322 {
 
         return (minCoin == Integer.MAX_VALUE) ? -1 : minCoin;  // 输出答案
     }
+
+    /**
+     * 使用最少的硬币数量兑换出amount的钱
+     * dp[amount] 代表 amount 数量最少需要多少coin兑换
+     * dp[i] = min(dp[i - coins[j]] + 1, dp[i])
+     * @param coins
+     * @param amount
+     * @return
+     */
+    public int coinChange2(int[] coins, int amount) {
+        int[] dp = new int[amount + 1];
+        Arrays.fill(dp, Integer.MAX_VALUE);
+        dp[0] = 0;
+        for (int i = 1; i <= amount; i ++) {
+            for (int j = 0; j < coins.length; j ++) {
+                if (i - coins[j] >= 0 && dp[i - coins[j]] != Integer.MAX_VALUE) {
+                    dp[i] = Math.min(dp[i - coins[j]] + 1, dp[i]);
+                }
+            }
+        }
+        return dp[amount] == Integer.MAX_VALUE ? -1 : dp[amount];
+    }
 }

@@ -40,8 +40,9 @@ public class Solution206 {
     public static void main(String[] args) {
 
         ListNode node = ListNodeUtil.generateLinkedList(10);
+        ListNodeUtil.printLinkedList(ListNodeUtil.reverseListByRecursive(node));
 
-        ListNode result = new Solution206().reverseList(node);
-        ListNodeUtil.printLinkedList(result);
+//        ListNode result = new Solution206().reverseList(node);
+//        ListNodeUtil.printLinkedList(result);
     }
 }
