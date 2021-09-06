@@ -5,6 +5,7 @@ import java.util.*;
 class Solution127 {
 
     /**
+     * https://leetcode-cn.com/problems/word-ladder/description/
      * Input:
      * beginWord = "hit",
      * endWord = "cog",
@@ -45,6 +46,7 @@ class Solution127 {
 
                 }
             }
+            //判断queue里面取出的是新的一层
             if (curNum == 0) {
                 curNum = nextNum;
                 nextNum = 0;
