@@ -38,6 +38,13 @@ public class Solution88 {
         }
     }
 
+    /**
+     * 这道题目的关键是从后面开始选择，从最后一位开始判断到底选那个元素即可
+     * @param nums1
+     * @param m
+     * @param nums2
+     * @param n
+     */
     public void merge2(int[] nums1, int m, int[] nums2, int n) {
         int index1 = m - 1, index2 = n - 1, totalIndex = m + n - 1;
         while (index1 >= 0 && index2 >=0){
@@ -47,6 +54,54 @@ public class Solution88 {
         while (index2 >= 0) {
             nums1[totalIndex--] = nums2[index2--];
         }
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    /**
+     * 这道题目的关键是从后面开始选择，从最后一位开始判断到底选那个元素即可
+     * @param nums1
+     * @param m
+     * @param nums2
+     * @param n
+     */
+    public void merge3(int[] nums1, int m, int[] nums2, int n) {
+        int idx1 = m -1, idx2 = n -1, lastIdx = m + n -1;
+        while (idx1 >= 0 && idx2 >= 0) {
+            if (nums1[idx1] > nums2[idx2]) {
+                nums1[lastIdx] = nums1[idx1];
+                idx1 --;
+            } else {
+                nums1[lastIdx] = nums2[idx2];
+                idx2 --;
+            }
+            lastIdx --;
+        }
+        while (idx2 >= 0) {
+            nums1[lastIdx] = nums2[idx2];
+            lastIdx --;
+            idx2 --;
+        }
+
     }
 
     public static void main(String[] args) {
