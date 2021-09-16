@@ -1,6 +1,7 @@
 package leetcode.solutions;
 
 import leetcode.base.ListNode;
+import leetcode.base.ListNodeUtil;
 
 public class Solution19 {
 
@@ -23,22 +24,29 @@ public class Solution19 {
         return dummy.next;
     }
 
-    private static void printListNode(ListNode node) {
-        while (node != null) {
-            System.out.print(node.val + " ");
-            node = node.next;
+
+    public ListNode removeNthFromEnd2(ListNode head, int n) {
+        ListNode dummy = new ListNode();
+        dummy.next = head;
+        ListNode fast = head;
+        ListNode pre = dummy;
+        for (int i = 0; i < n; i ++) {
+            fast = fast.next;
         }
+        while (fast != null) {
+            fast = fast.next;
+            pre = pre.next;
+        }
+        pre.next = pre.next.next;
+        return dummy.next;
     }
+
+
 
     public static void main(String[] args) {
 //        1->2->3->4->5, and n = 2.
-        ListNode head = new ListNode(1);
-//        ListNode cur = head;
-//        for (int i = 1; i < 10; i ++) {
-//            cur.next = new ListNode(i + 1);
-//            cur = cur.next;
-//        }
-        ListNode result = new Solution19().removeNthFromEnd(head, 1);
-        printListNode(result);
+        ListNode node = ListNodeUtil.generateLinkedList(10);
+        ListNode result = new Solution19().removeNthFromEnd2(node, 2);
+        ListNodeUtil.printLinkedList(result);
     }
 }

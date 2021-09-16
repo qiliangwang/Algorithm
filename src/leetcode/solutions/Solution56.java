@@ -3,6 +3,7 @@ package leetcode.solutions;
 import leetcode.base.Interval;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
@@ -41,6 +42,64 @@ public class Solution56 {
         }
         res.add(new Interval(start, end));
         return res;
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    public int[][] merge(int[][] intervals) {
+        Arrays.sort(intervals, (x1, x2) -> x1[0] - x2[0]);
+
+        int start = intervals[0][0], end = intervals[0][1];
+        ArrayList<int[]> ans = new ArrayList<>();
+        for (int[] interval : intervals) {
+            if (interval[0] > end) {
+                ans.add(new int[]{start, end});
+                start = interval[0];
+                end = interval[1];
+            } else {
+                end = Math.max(end, interval[1]);
+            }
+        }
+        ans.add(new int[]{start, end});
+        return ans.toArray(new int[ans.size()][]);
     }
 
     public static void main(String[] args) {

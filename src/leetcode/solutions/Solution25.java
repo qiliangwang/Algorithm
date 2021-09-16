@@ -24,10 +24,10 @@ public class Solution25 {
             cur = reverseKGroup(cur, k);
             //处理k的node 将node插到最前面即可
             while (count > 0) {
-                ListNode temp = head.next;
+                ListNode next = head.next;
                 head.next = cur;
                 cur = head;
-                head = temp;
+                head = next;
                 count--;
             }
             head = cur;
@@ -36,10 +36,49 @@ public class Solution25 {
     }
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    public ListNode reverseInKGroup(ListNode head, int k) {
+        if (head == null || head.next == null) {return head;}
+        ListNode dummy = head;
+        int count = 0;
+        while (dummy != null && count != k) {
+            dummy = dummy.next;
+            count++;
+        }
+        if (count == k) {
+            dummy = reverseInKGroup(dummy, k);
+            while (count > 0) {
+                ListNode next = head.next;
+                head.next = dummy;
+                dummy = head;
+                head = next;
+                count --;
+            }
+            head = dummy;
+        }
+        return head;
+    }
+
+
     public static void main(String[] args) {
       ListNode node = ListNodeUtil.generateLinkedList(10);
       ListNodeUtil.printLinkedList(node);
-      ListNode result = new Solution25().reverseKGroup(node, 10);
+      ListNode result = new Solution25().reverseInKGroup(node, 10);
       ListNodeUtil.printLinkedList(result);
     }
 }

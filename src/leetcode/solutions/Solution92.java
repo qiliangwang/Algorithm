@@ -37,17 +37,31 @@ public class Solution92 {
         return dummy.next;
     }
 
+
+
     /**
-     * 1 -> 2 -> 3
+     * reverse
      * @param head
-     * @param begin
-     * @param end
+     * @param left
+     * @param right
      * @return
      */
-    public ListNode reverseFromTo(ListNode head, int begin, int end) {
-       return head;
-
-
+    public ListNode reverseBetween2(ListNode head, int left, int right) {
+        ListNode dummy = new ListNode();
+        dummy.next = head;
+        ListNode pre = dummy;
+        for (int i = 1; i < left; i ++) {
+            pre = pre.next;
+        }
+        //
+        ListNode cur = pre.next;
+        for (int i = 0; i < right - left; i ++) {
+            ListNode next = cur.next;
+            cur.next = next.next;
+            next.next = pre.next;
+            pre.next = next;
+        }
+        return dummy.next;
     }
 
 
@@ -55,7 +69,7 @@ public class Solution92 {
 
         ListNode node = ListNodeUtil.generateLinkedList(10);
         ListNodeUtil.printLinkedList(node);
-        ListNode result = new Solution92().reverseBetween(node, 2, 4);
+        ListNode result = new Solution92().reverseBetween2(node, 2, 4);
         ListNodeUtil.printLinkedList(result);
     }
 }

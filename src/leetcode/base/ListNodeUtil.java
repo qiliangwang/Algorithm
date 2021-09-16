@@ -64,7 +64,7 @@ public class ListNodeUtil {
     }
 
     /**
-     * 使用pre来实现reverse
+     * 使用pre来实现reverse 本质上还是头插入发 只不过pre就是dummy.next()
      * @return
      */
     public static ListNode reverseListByPreNode(ListNode head) {
@@ -97,7 +97,7 @@ public class ListNodeUtil {
     public static void main(String[] args) {
         ListNode node = ListNodeUtil.generateLinkedList(10);
         ListNodeUtil.printLinkedList(node);
-        ListNodeUtil.printLinkedList(ListNodeUtil.getMiddle(node));
+        ListNodeUtil.printLinkedList(ListNodeUtil.reverseListByRecursive(node));
     }
 
 
