@@ -5,7 +5,10 @@ import leetcode.base.TreeNode;
 public class Solution105 {
 
     /**
-     *
+     * pre order
+     * pre:[root, left, right]
+     * in:[left, root, right]
+     * post[left right root]
      * @param preorder
      * @param inorder
      * @return

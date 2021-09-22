@@ -1,6 +1,7 @@
 package leetcode.solutions;
 
 import leetcode.base.TreeNode;
+import leetcode.util.TreeUtil;
 
 import java.util.ArrayList;
 import java.util.LinkedList;
@@ -43,9 +44,31 @@ import java.util.List;
  * @since 2019/11/13 10:08 上午
  */
 public class Solution230 {
+
+    private  int k = 0;
+
+
     public int kthSmallest(TreeNode root, int k) {
         List<Integer> nums = inOrder(root, new ArrayList<>());
         return nums.get(k - 1);
+    }
+
+    public int kthSmallest3(TreeNode root, int k) {
+      this.k = k;
+      return kthSmallest3(root);
+    }
+
+    public int kthSmallest3(TreeNode root) {
+      if (root == null) {return -1;}
+
+      int i = kthSmallest3(root.left);
+      k --;
+      if (k == 0) {
+        return root.val;
+      }
+      int j = kthSmallest3(root.right);
+
+      return i == -1 ? j : i;
     }
 
 
@@ -82,7 +105,8 @@ public class Solution230 {
 
         root.left.left.left = new TreeNode(1);
 
-        int i = new Solution230().kthSmallest2(root, 5);
-        System.out.println(i);
+//        int i = new Solution230().kthSmallest3(root, 5);
+//        System.out.println(i);
+      TreeUtil.printTree(root);
     }
 }
