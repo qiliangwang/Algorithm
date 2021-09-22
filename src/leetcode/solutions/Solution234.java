@@ -1,13 +1,13 @@
 package leetcode.solutions;
 
 import leetcode.base.ListNode;
-import leetcode.base.ListNodeUtil;
+import leetcode.util.ListUtil;
 
 public class Solution234 {
 
     public boolean isPalindrome(ListNode head) {
         if (head == null) return true;
-        ListNode middle = ListNodeUtil.getMiddle(head);
+        ListNode middle = ListUtil.getMiddle(head);
         middle.next = reverse(middle.next);
         ListNode p = head;
         ListNode q = middle.next;

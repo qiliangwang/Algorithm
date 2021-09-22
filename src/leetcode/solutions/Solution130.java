@@ -1,6 +1,6 @@
 package leetcode.solutions;
 
-import leetcode.base.MatrixUtil;
+import leetcode.util.MatrixUtil;
 
 /**
  * @author Vader Wang

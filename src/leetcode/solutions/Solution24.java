@@ -1,7 +1,7 @@
 package leetcode.solutions;
 
 import leetcode.base.ListNode;
-import leetcode.base.ListNodeUtil;
+import leetcode.util.ListUtil;
 
 public class Solution24 {
 
@@ -22,8 +22,8 @@ public class Solution24 {
     }
 
     public static void main(String[] args) {
-        ListNode root = ListNodeUtil.generateLinkedList(3);
+        ListNode root = ListUtil.generateLinkedList(3);
         ListNode result = new Solution24().swapPairs(root);
-        ListNodeUtil.printLinkedList(result);
+        ListUtil.printLinkedList(result);
     }
 }

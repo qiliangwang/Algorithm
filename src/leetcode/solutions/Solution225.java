@@ -1,8 +1,5 @@
 package leetcode.solutions;
 
-import leetcode.base.ListNode;
-import leetcode.base.ListNodeUtil;
-
 import java.util.LinkedList;
 import java.util.Queue;
 

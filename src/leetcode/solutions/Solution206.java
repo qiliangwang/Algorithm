@@ -1,7 +1,7 @@
 package leetcode.solutions;
 
 import leetcode.base.ListNode;
-import leetcode.base.ListNodeUtil;
+import leetcode.util.ListUtil;
 
 /**
  * 其实是借助dummy来对链表进行reverse
@@ -39,10 +39,10 @@ public class Solution206 {
 
     public static void main(String[] args) {
 
-        ListNode node = ListNodeUtil.generateLinkedList(10);
-        ListNodeUtil.printLinkedList(ListNodeUtil.reverseListByRecursive(node));
+        ListNode node = ListUtil.generateLinkedList(10);
+        ListUtil.printLinkedList(ListUtil.reverseListByRecursive(node));
 
 //        ListNode result = new Solution206().reverseList(node);
-//        ListNodeUtil.printLinkedList(result);
+//        ListUtil.printLinkedList(result);
     }
 }

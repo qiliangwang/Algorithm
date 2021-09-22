@@ -2,7 +2,7 @@ package leetcode.solutions;
 
 
 import leetcode.base.ListNode;
-import leetcode.base.ListNodeUtil;
+import leetcode.util.ListUtil;
 
 /**
  * 这个意思是按照k的间隔将list reverse 如果不符合k就不reverse
@@ -76,9 +76,9 @@ public class Solution25 {
 
 
     public static void main(String[] args) {
-      ListNode node = ListNodeUtil.generateLinkedList(10);
-      ListNodeUtil.printLinkedList(node);
+      ListNode node = ListUtil.generateLinkedList(10);
+      ListUtil.printLinkedList(node);
       ListNode result = new Solution25().reverseInKGroup(node, 10);
-      ListNodeUtil.printLinkedList(result);
+      ListUtil.printLinkedList(result);
     }
 }

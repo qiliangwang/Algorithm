@@ -38,6 +38,22 @@ class Solution200 {
         }
     }
 
+
+    /**
+     * 更加简洁的一种写法，代码功底还是有进步的
+     * @param grid
+     * @param i
+     * @param j
+     */
+    private void dfs2(char[][] grid, int i, int j) {
+        if (inArea(i, j) && grid[i][j] == '1' && !visited[i][j]) {
+            visited[i][j] = true;
+            for (int[] dir : d) {
+                dfs2(grid, i + dir[0], j + dir[1]);
+            }
+        }
+    }
+
     private boolean inArea(int x, int y) {
         return x >= 0 && x < m && y >= 0 && y < n;
     }

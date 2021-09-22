@@ -1,4 +1,4 @@
-package leetcode.base;
+package leetcode.util;
 
 public class MatrixUtil {
 

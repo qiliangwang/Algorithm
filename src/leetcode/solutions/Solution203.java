@@ -1,7 +1,7 @@
 package leetcode.solutions;
 
 import leetcode.base.ListNode;
-import leetcode.base.ListNodeUtil;
+import leetcode.util.ListUtil;
 
 /**
  * 给你一个链表的头节点 head 和一个整数 val ，请你删除链表中所有满足 Node.val == val 的节点，并返回 新的头节点 。
@@ -57,9 +57,9 @@ public class Solution203 {
 
     public static void main(String[] args) {
 
-        ListNode node = ListNodeUtil.generateLinkedList(10);
-        ListNodeUtil.printLinkedList(node);
+        ListNode node = ListUtil.generateLinkedList(10);
+        ListUtil.printLinkedList(node);
         ListNode result = new Solution203().removeElements(node, 10);
-        ListNodeUtil.printLinkedList(result);
+        ListUtil.printLinkedList(result);
     }
 }

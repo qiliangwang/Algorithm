@@ -26,7 +26,7 @@ public class Solution5 {
     }
 
     public static void main(String[] args) {
-        String result = new Solution5().longestPalindrome("c");
+        String result = new Solution5().longestPalindrome("abc");
         System.out.println(result);
     }
 }

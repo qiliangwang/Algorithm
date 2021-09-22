@@ -1,7 +1,7 @@
 package leetcode.solutions;
 
 import leetcode.base.ListNode;
-import leetcode.base.ListNodeUtil;
+import leetcode.util.ListUtil;
 
 public class Solution19 {
 
@@ -45,8 +45,8 @@ public class Solution19 {
 
     public static void main(String[] args) {
 //        1->2->3->4->5, and n = 2.
-        ListNode node = ListNodeUtil.generateLinkedList(10);
+        ListNode node = ListUtil.generateLinkedList(10);
         ListNode result = new Solution19().removeNthFromEnd2(node, 2);
-        ListNodeUtil.printLinkedList(result);
+        ListUtil.printLinkedList(result);
     }
 }

@@ -1,6 +1,8 @@
-package leetcode.base;
+package leetcode.util;
 
-public class ListNodeUtil {
+import leetcode.base.ListNode;
+
+public class ListUtil {
 
     /**
      * 打印链表的元素
@@ -95,9 +97,9 @@ public class ListNodeUtil {
 
 
     public static void main(String[] args) {
-        ListNode node = ListNodeUtil.generateLinkedList(10);
-        ListNodeUtil.printLinkedList(node);
-        ListNodeUtil.printLinkedList(ListNodeUtil.reverseListByRecursive(node));
+        ListNode node = ListUtil.generateLinkedList(10);
+        ListUtil.printLinkedList(node);
+        ListUtil.printLinkedList(ListUtil.reverseListByRecursive(node));
     }
 
 

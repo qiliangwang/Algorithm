@@ -1,7 +1,7 @@
 package leetcode.solutions;
 
 import leetcode.base.ListNode;
-import leetcode.base.ListNodeUtil;
+import leetcode.util.ListUtil;
 
 public class Solution21 {
 
@@ -64,6 +64,6 @@ public class Solution21 {
 
 
         ListNode result = new Solution21().mergeTwoLists(l1, l2);
-        ListNodeUtil.printLinkedList(result);
+        ListUtil.printLinkedList(result);
     }
 }

@@ -1,7 +1,7 @@
 package leetcode.solutions;
 
 import leetcode.base.ListNode;
-import leetcode.base.ListNodeUtil;
+import leetcode.util.ListUtil;
 
 public class Solution92 {
 
@@ -67,9 +67,9 @@ public class Solution92 {
 
     public static void main(String[] args) {
 
-        ListNode node = ListNodeUtil.generateLinkedList(10);
-        ListNodeUtil.printLinkedList(node);
+        ListNode node = ListUtil.generateLinkedList(10);
+        ListUtil.printLinkedList(node);
         ListNode result = new Solution92().reverseBetween2(node, 2, 4);
-        ListNodeUtil.printLinkedList(result);
+        ListUtil.printLinkedList(result);
     }
 }
