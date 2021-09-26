@@ -1,9 +1,8 @@
 package leetcode.learn;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Stack;
+import leetcode.util.ArrayUtil;
+
+import java.util.*;
 
 @SuppressWarnings("all")
 public class Solution {
@@ -133,6 +132,55 @@ public class Solution {
         return -1;
     }
 
+
+    /**
+     * 使用堆这种数据结构实现sliding window
+     * @param nums
+     * @param k
+     * @return
+     */
+    public int[] maxSlidingWindow(int[] nums, int k) {
+        int[] res = new int[nums.length - k + 1];
+        PriorityQueue<Integer> maxHeap = new PriorityQueue<>((a, b) -> nums[b] - nums[a]);
+        for (int i = 0; i < nums.length; i ++) {
+            while (maxHeap.size() != 0 && maxHeap.peek() <= i - k) {
+                maxHeap.poll();
+            }
+            maxHeap.add(i);
+            if (i + 1 >= k) {
+                res[i - k + 1] = nums[maxHeap.peek()];
+            }
+        }
+        return res;
+    }
+
+
+    /**
+     * 使用单调队列来实现滑动窗口最大值
+     * @param nums
+     * @param k
+     * @return
+     */
+    public int[] maxSlidingWindow2(int[] nums, int k) {
+        int[] res = new int[nums.length - k + 1];
+        Deque<Integer> deque = new LinkedList<>();
+        for (int i = 0; i < nums.length; i ++) {
+            //remove window
+            while (!deque.isEmpty() && deque.peekFirst() <= i - k) {
+                deque.removeFirst();
+            }
+            //单调队列的add
+            while (!deque.isEmpty() && nums[deque.peekLast()] < nums[i]) {
+                deque.removeLast();
+            }
+            deque.offerLast(i);
+            if (i + 1 >= k) {
+                res[i+1 -k] = nums[deque.peekFirst()];
+            }
+        }
+        return res;
+    }
+
     public static void main(String[] args) {
         Solution solution = new Solution();
 //        boolean valid = solution.isValid("()[]{}");
@@ -141,6 +189,9 @@ public class Solution {
 //        System.out.println(lists);
 
         int search = solution.search(new int[]{3, 1}, 1);
-        System.out.println(search);
+
+        int[] result = solution.maxSlidingWindow2(new int[] {1,3,-1,-3,5,3,6,7}, 3);
+        ArrayUtil.printArray(result);
+//        System.out.println(search);
     }
 }
