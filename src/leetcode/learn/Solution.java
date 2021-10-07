@@ -1,5 +1,6 @@
 package leetcode.learn;
 
+import leetcode.base.TreeNode;
 import leetcode.util.ArrayUtil;
 
 import java.util.*;
@@ -174,12 +175,59 @@ public class Solution {
                 deque.removeLast();
             }
             deque.offerLast(i);
+
             if (i + 1 >= k) {
                 res[i+1 -k] = nums[deque.peekFirst()];
             }
         }
         return res;
     }
+
+
+
+    private int max;
+    public int maxPathSum(TreeNode root) {
+        max = Integer.MIN_VALUE;
+        calMaxSum(root);
+        return max;
+    }
+
+    private int calMaxSum(TreeNode root) {
+        if (root == null) {return 0;}
+        int left = Math.max(calMaxSum(root.left), 0);
+        int right = Math.max(calMaxSum(root.right), 0);
+        max = Math.max(max, left + root.val + right);
+        return root.val + Math.max(right, left);
+    }
+
+
+    /**
+     *
+     * @param x
+     * @return
+     */
+    public int mySqrt(int x) {
+        int l = 0, r = x;
+        while (l <= r) {
+            int mid = l + (r - l) / 2;
+            long pow = (long)mid * (long)mid;
+            if (pow == x) {
+                return mid;
+            }else if (pow > x) {
+                r = mid - 1;
+            } else {
+                l = mid + 1;
+            }
+        }
+        if (r * r < x) {
+            return r;
+        } else {
+            return l;
+        }
+    }
+
+
+
 
     public static void main(String[] args) {
         Solution solution = new Solution();
@@ -192,6 +240,8 @@ public class Solution {
 
         int[] result = solution.maxSlidingWindow2(new int[] {1,3,-1,-3,5,3,6,7}, 3);
         ArrayUtil.printArray(result);
+
+        int i = solution.mySqrt(2147483647);
 //        System.out.println(search);
     }
 }

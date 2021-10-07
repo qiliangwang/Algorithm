@@ -24,11 +24,29 @@ public class Solution28 {
      * @param needle
      * @return
      */
-    public int strStr(String haystack, String needle) {
+    public int strStr2(String haystack, String needle) {
         if (needle.length() == 0) return 0;
         for (int i = 0; i <= haystack.length() - needle.length(); i ++) {
             String substring = haystack.substring(i, i + needle.length());
             if (needle.equals(substring)) {
+                return i;
+            }
+        }
+        return -1;
+    }
+
+
+    public int strStr(String haystack, String needle) {
+        if (needle.length() == 0) {return 0;}
+        for (int i = 0; i <= haystack.length() - needle.length(); i ++) {
+            Boolean isMatch = true;
+            for (int j = 0; j < needle.length(); j ++) {
+                if (needle.charAt(j) != haystack.charAt(i + j)) {
+                    isMatch = false;
+                    break;
+                }
+            }
+            if (isMatch) {
                 return i;
             }
         }

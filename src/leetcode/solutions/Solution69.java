@@ -3,6 +3,9 @@ package leetcode.solutions;
 public class Solution69 {
 
     /**
+     *
+     * https://leetcode-cn.com/problems/sqrtx/
+     *
      * Implement int sqrt(int x).
      *
      * Compute and return the square root of x, where x is guaranteed to be a non-negative integer.
@@ -39,7 +42,7 @@ public class Solution69 {
     }
 
     public static void main(String[] args) {
-        int result = new Solution69().mySqrt(8);
+        int result = new Solution69().mySqrt(2147483647);
         System.out.println(result);
     }
 }

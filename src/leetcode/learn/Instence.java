@@ -1,4 +1,4 @@
-package leetcode.solutions;
+package leetcode.learn;
 
 /**
  * @author wangql
