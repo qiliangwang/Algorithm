@@ -28,8 +28,9 @@ package leetcode.solutions;
  * 通过次数71,506提交次数171,010
  */
 public class Solution224 {
-    //2 stack
+
     int idx = 0;
+
     public int calculate(String s) {
         return doCalculate(s);
     }
@@ -37,28 +38,23 @@ public class Solution224 {
     private int doCalculate(String s) {
         int res = 0, sign = 1;
         while (idx < s.length()) {
-            if (Character.isDigit(s.charAt(idx))) {
-                //parse digit
-                int val = 0;
+            char c = s.charAt(idx);
+            idx++;
+            if (Character.isDigit(c)) {
+                int val = c - '0';
                 while (idx < s.length() && Character.isDigit(s.charAt(idx))) {
                     val = val * 10 + s.charAt(idx) - '0';
                     idx ++;
                 }
                 res += sign * val;
-            } else if (s.charAt(idx) == '(') {
-                idx ++;
+            } else if (c == '(') {
                 res += sign * doCalculate(s);
-            } else if (s.charAt(idx) == '+') {
+            } else if (c == '+') {
                 sign = 1;
-                idx ++;
-            } else if (s.charAt(idx) == '-') {
+            } else if (c == '-') {
                 sign = -1;
-                idx ++;
-            } else if (s.charAt(idx) == ')') {
-                idx ++;
+            } else if (c == ')') {
                 return res;
-            } else {
-                idx ++;
             }
         }
         return res;
