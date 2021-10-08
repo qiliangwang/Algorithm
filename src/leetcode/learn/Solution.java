@@ -1,6 +1,7 @@
 package leetcode.learn;
 
 import leetcode.base.TreeNode;
+import leetcode.base.ListNode;
 import leetcode.util.ArrayUtil;
 
 import java.util.*;
@@ -229,6 +230,78 @@ public class Solution {
 
 
 
+
+    /**
+     * 22 括号生成
+     * @param n
+     * @return
+     */
+    public List<String> generateParenthesis(int n) {
+        List<String> ans = new ArrayList<>();
+        doGenerateParenthesis(ans, "", 0, 0, n);
+        return ans;
+    }
+
+    /**
+     *
+     * @param ans
+     * @param s
+     * @param left 左括号的剩余数量
+     * @param right
+     */
+    private void doGenerateParenthesis(List<String> ans, String s, int left, int right, int n) {
+        //（） ）必须在（的后面 -> ) 之前必须有（ -> left 《 right
+        //右括号比左括号多
+        if (left < right) {return;}
+        if (left == n && right == n) {ans.add(s);}
+        if (left < n) {
+            doGenerateParenthesis(ans, s + "(", left + 1, right, n);
+        }
+        if (right < n) {
+            doGenerateParenthesis(ans, s + ")", left, right + 1, n);
+        }
+    }
+
+
+    /**
+     * 这个
+     * @param head
+     * @return
+     */
+    public boolean isPalindrome(ListNode head) {
+        //获取mid reverse compare
+        ListNode middle = getMiddle(head);
+        ListNode revered = reverse(middle.next);
+        while (head != null && revered != null) {
+            if (head.val != revered.val) {
+                return false;
+            }
+            head = head.next;
+            revered = revered.next;
+        }
+        return true;
+    }
+
+    private ListNode reverse(ListNode node) {
+        ListNode dummy = new ListNode();
+        while (node != null) {
+            ListNode next = node.next;
+            node.next = dummy.next;
+            dummy.next = node;
+            node = next;
+        }
+        return dummy.next;
+    }
+
+    private ListNode getMiddle(ListNode node) {
+        ListNode slow = node, fast = node;
+        while (fast.next != null && fast.next.next != null) {
+            slow = slow.next;
+            fast = fast.next.next;
+        }
+        return slow;
+    }
+
     public static void main(String[] args) {
         Solution solution = new Solution();
 //        boolean valid = solution.isValid("()[]{}");
@@ -240,8 +313,6 @@ public class Solution {
 
         int[] result = solution.maxSlidingWindow2(new int[] {1,3,-1,-3,5,3,6,7}, 3);
         ArrayUtil.printArray(result);
-
-        int i = solution.mySqrt(2147483647);
 //        System.out.println(search);
     }
 }
